@@ -5,7 +5,7 @@ import { readFileSync, readdirSync, existsSync } from "node:fs";
 
 const manifest = JSON.parse(readFileSync("fixtures/apartment/manifest.json", "utf8"));
 const truth = Object.fromEntries(manifest.photos.map((p) => [p.file.replace(/^Photos\//, "Photos/"), p]));
-const runs = existsSync("emulator/runs") ? readdirSync("emulator/runs").filter((f) => f.endsWith(".json") && f !== "labels.json") : [];
+const runs = existsSync("emulator/runs") ? readdirSync("emulator/runs").filter((f) => f.endsWith(".json") && !f.startsWith("labels")) : [];
 let failures = 0;
 const check = (run, name, ok, detail = "") => {
   console.log(`${ok ? "PASS" : "FAIL"} ${run.id.padEnd(13)} ${name}${ok ? "" : "  <- " + detail}`);
