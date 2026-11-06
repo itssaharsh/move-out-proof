@@ -6,6 +6,10 @@ A Skill for the UGREEN AI NAS assistant, built for the UGREEN Hackathon 2026 on 
 
 > The model looks. The camera dates decide. You approve.
 
+**Watch it run:** [move-out-proof.vercel.app](https://move-out-proof.vercel.app), a replay of recorded emulator runs (no sign-in, no model calls).
+
+![The replay page: the landlord's letter, Play, and a move-in/move-out pair with a gap](web/public/og.png)
+
 ## What it does
 
 Tell the assistant your move-in and move-out dates. Move-out Proof:
@@ -61,6 +65,17 @@ The emulator is ours, built from UGREEN's public catalog: it is a rehearsal of t
 ## Staged demo apartment
 
 [`fixtures/apartment/`](fixtures/apartment/) is staged: free-licence stock photos from Wikimedia Commons (CC0 and CC BY-SA 4.0), programmatic re-shots for the move-out side, added marks (a carpet stain present at move-in, nail holes at move-out), assigned camera dates, and a fictional letter. Sources and licences: [CREDITS.md](fixtures/apartment/CREDITS.md).
+
+## Limits
+
+- No UGREEN NAS was available for the preliminary round. The emulator is ours, built from the public capability catalog; it rehearses the flow but does not prove device behaviour. The real-device run is planned for the finalist session.
+- The demo apartment is staged: stock photos, assigned dates, a fictional letter.
+- The Skill needs photos with correct capture dates and finds only what was photographed. Vision notes can be wrong, which is why every row shows both photos for the renter to judge.
+- Spot-label accuracy (12 of 12) was measured on the same 12 photos used to tune the prompt.
+
+## How it was built
+
+Built from 6 November 2026, inside the hackathon's build window. AI tools used: Claude Code (planning, code, review) and the UGREEN Skill Creation Tool's checker; the emulator's agents run on Google Gemini models (Gemini 3.5 Flash-Lite and others, via the Gemini API).
 
 ## Licence
 
