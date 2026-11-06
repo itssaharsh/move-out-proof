@@ -50,3 +50,4 @@ emulator/out/
 # fixture download cache
 fixtures/apartment/.cache/
 emulator/.cache/
+web/official-check.json
