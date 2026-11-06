@@ -46,3 +46,6 @@ emulator/out/
 
 # official UGREEN Skill Creation Tool (download with tools/fetch-kit.sh)
 .kit/
+
+# fixture download cache
+fixtures/apartment/.cache/

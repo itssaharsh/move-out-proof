@@ -1,0 +1,188 @@
+{
+  "staged": true,
+  "note": "STAGED DEMO: stock photos, programmatic re-shots and marks, assigned dates. Fictional names.",
+  "photos": [
+    {
+      "file": "Photos/2024/03/IMG_20240312_100412.jpg",
+      "window": "move-in",
+      "datetime_original": "2024-03-12T10:04:12",
+      "spot_truth": "kitchen-oven",
+      "state_note": "clean oven at move-in",
+      "base_id": "oven",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Kitchen_(Unsplash).jpg",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Kitchen_%28Unsplash%29.jpg",
+      "author": "Naomi Hébert (naomish, Unsplash)",
+      "license": "CC0 1.0"
+    },
+    {
+      "file": "Photos/2024/03/IMG_20240312_101140.jpg",
+      "window": "move-in",
+      "datetime_original": "2024-03-12T10:11:40",
+      "spot_truth": "living-room-carpet",
+      "state_note": "coffee stain on carpet, already present at move-in",
+      "base_id": "carpet",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Laptop_in_the_living_room_(Unsplash).jpg",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/7/75/Laptop_in_the_living_room_%28Unsplash%29.jpg",
+      "author": "Oliur Rahman (ultralinx, Unsplash)",
+      "license": "CC0 1.0"
+    },
+    {
+      "file": "Photos/2024/03/IMG_20240312_101725.jpg",
+      "window": "move-in",
+      "datetime_original": "2024-03-12T10:17:25",
+      "spot_truth": "living-room-wall",
+      "state_note": "clean painted wall, no marks",
+      "base_id": "wall",
+      "source_page": "https://commons.wikimedia.org/wiki/File:At_Home_(Unsplash).jpg",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/df/At_Home_%28Unsplash%29.jpg",
+      "author": "Naomi Hébert (naomish, Unsplash)",
+      "license": "CC0 1.0"
+    },
+    {
+      "file": "Photos/2024/03/IMG_20240312_102408.jpg",
+      "window": "move-in",
+      "datetime_original": "2024-03-12T10:24:08",
+      "spot_truth": "bedroom-wall",
+      "state_note": "clean bedroom wall",
+      "base_id": "bedroom",
+      "source_page": "https://commons.wikimedia.org/wiki/File:NY_loft_bedroom_(Unsplash).jpg",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/29/NY_loft_bedroom_%28Unsplash%29.jpg",
+      "author": "Gabriel Beaudry (gbeaudry, Unsplash)",
+      "license": "CC0 1.0"
+    },
+    {
+      "file": "Photos/2026/10/IMG_20261030_140631.jpg",
+      "window": "move-out",
+      "datetime_original": "2026-10-30T14:06:31",
+      "spot_truth": "kitchen-oven",
+      "state_note": "oven still clean at move-out (re-shot)",
+      "base_id": "oven",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Kitchen_(Unsplash).jpg",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Kitchen_%28Unsplash%29.jpg",
+      "author": "Naomi Hébert (naomish, Unsplash)",
+      "license": "CC0 1.0"
+    },
+    {
+      "file": "Photos/2026/10/IMG_20261030_141152.jpg",
+      "window": "move-out",
+      "datetime_original": "2026-10-30T14:11:52",
+      "spot_truth": "living-room-carpet",
+      "state_note": "same coffee stain as at move-in (re-shot)",
+      "base_id": "carpet",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Laptop_in_the_living_room_(Unsplash).jpg",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/7/75/Laptop_in_the_living_room_%28Unsplash%29.jpg",
+      "author": "Oliur Rahman (ultralinx, Unsplash)",
+      "license": "CC0 1.0"
+    },
+    {
+      "file": "Photos/2026/10/IMG_20261030_141607.jpg",
+      "window": "move-out",
+      "datetime_original": "2026-10-30T14:16:07",
+      "spot_truth": "living-room-wall",
+      "state_note": "3 small nail holes and one grey scuff mark, not present at move-in",
+      "base_id": "wall",
+      "source_page": "https://commons.wikimedia.org/wiki/File:At_Home_(Unsplash).jpg",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/df/At_Home_%28Unsplash%29.jpg",
+      "author": "Naomi Hébert (naomish, Unsplash)",
+      "license": "CC0 1.0"
+    },
+    {
+      "file": "Photos/2026/10/IMG_20261030_142144.jpg",
+      "window": "move-out",
+      "datetime_original": "2026-10-30T14:21:44",
+      "spot_truth": "bathroom-tub",
+      "state_note": "bathtub at move-out; NO move-in photo exists (staged gap)",
+      "base_id": "tub",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Ravak_bathtub_CHROME_2019_(1).jpg",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/80/Ravak_bathtub_CHROME_2019_%281%29.jpg",
+      "author": "Ronnica123 (Wikimedia Commons)",
+      "license": "CC BY-SA 4.0"
+    },
+    {
+      "file": "Photos/2026/10/IMG_20261030_142719.jpg",
+      "window": "move-out",
+      "datetime_original": "2026-10-30T14:27:19",
+      "spot_truth": "bedroom-wall",
+      "state_note": "bedroom wall clean at move-out (re-shot)",
+      "base_id": "bedroom",
+      "source_page": "https://commons.wikimedia.org/wiki/File:NY_loft_bedroom_(Unsplash).jpg",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/29/NY_loft_bedroom_%28Unsplash%29.jpg",
+      "author": "Gabriel Beaudry (gbeaudry, Unsplash)",
+      "license": "CC0 1.0"
+    },
+    {
+      "file": "Photos/2026/10/IMG_20261030_143305.jpg",
+      "window": "move-out",
+      "datetime_original": "2026-10-30T14:33:05",
+      "spot_truth": "unclear",
+      "state_note": "heavily blurred and darkened hallway photo",
+      "base_id": "hall",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Home_Sweet_Home_Pt._4_(Unsplash).jpg",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/27/Home_Sweet_Home_Pt._4_%28Unsplash%29.jpg",
+      "author": "Kari Shea (karishea, Unsplash)",
+      "license": "CC0 1.0"
+    },
+    {
+      "file": "Photos/2025/07/IMG_20250719_162000.jpg",
+      "window": "outside",
+      "datetime_original": "2025-07-19T16:20:00",
+      "spot_truth": "not-a-spot",
+      "state_note": "holiday beach photo, outside both date windows",
+      "base_id": "beach",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Beach_by_the_pier_(Unsplash).jpg",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/1/17/Beach_by_the_pier_%28Unsplash%29.jpg",
+      "author": "Dakota Corbin (thedakotacorbin, Unsplash)",
+      "license": "CC0 1.0"
+    },
+    {
+      "file": "Photos/2025/12/IMG_20251224_194500.jpg",
+      "window": "outside",
+      "datetime_original": "2025-12-24T19:45:00",
+      "spot_truth": "not-a-spot",
+      "state_note": "plate of food, outside both date windows",
+      "base_id": "pizza",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Margherita_PIzza_(Unsplash).jpg",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/3/3a/Margherita_PIzza_%28Unsplash%29.jpg",
+      "author": "Thomas Schweighofer (Unsplash)",
+      "license": "CC0 1.0"
+    }
+  ],
+  "letter": {
+    "file": "Documents/Tenancy/deduction-letter.pdf",
+    "charges": [
+      {
+        "description": "Oven deep clean",
+        "amount_gbp": 180.0,
+        "spot_truth": "kitchen-oven"
+      },
+      {
+        "description": "Carpet stain treatment, living room",
+        "amount_gbp": 120.0,
+        "spot_truth": "living-room-carpet"
+      },
+      {
+        "description": "Wall repair and repaint, living room (nail holes and scuff)",
+        "amount_gbp": 90.0,
+        "spot_truth": "living-room-wall"
+      },
+      {
+        "description": "Bathroom deep clean",
+        "amount_gbp": 30.0,
+        "spot_truth": "bathroom-tub"
+      }
+    ]
+  },
+  "windows": {
+    "move_in": {
+      "start": "2024-03-01",
+      "end": "2024-03-31"
+    },
+    "move_out": {
+      "start": "2026-10-20",
+      "end": "2026-11-05"
+    }
+  },
+  "skipped": [
+    "moving-boxes photo (no suitable free-licence stock photo found)"
+  ]
+}
