@@ -1,0 +1,97 @@
+{
+  "model": "gemini-3.5-flash",
+  "prompt": "Which part of a rented home does this photo show? Answer on the first line with exactly one label from this list: kitchen-oven, kitchen-counter, kitchen-sink, fridge, bathroom-tub, bathroom-sink, toilet, living-room-wall, living-room-carpet, bedroom-wall, bedroom-carpet, window, front-door, not-a-spot, unclear. Use unclear when the photo is too dark or too blurry to tell. On the second line write one sentence about visible dirt, stains, marks or damage, or write none visible.",
+  "at": "2026-11-06T14:53:40.143Z",
+  "usage": {
+    "calls": 12,
+    "input": 14706,
+    "output": 118,
+    "thoughts": 1466
+  },
+  "rows": [
+    {
+      "file": "Photos/2024/03/IMG_20240312_100412.jpg",
+      "truth": "kitchen-oven",
+      "label": "kitchen-counter",
+      "correct": false,
+      "answer": "kitchen-counter\nNone visible."
+    },
+    {
+      "file": "Photos/2024/03/IMG_20240312_101140.jpg",
+      "truth": "living-room-carpet",
+      "label": "living-room-carpet",
+      "correct": true,
+      "answer": "living-room-carpet\nThere is a large brown stain on the light carpet."
+    },
+    {
+      "file": "Photos/2024/03/IMG_20240312_101725.jpg",
+      "truth": "living-room-wall",
+      "label": "living-room-wall",
+      "correct": true,
+      "answer": "living-room-wall\nNone visible."
+    },
+    {
+      "file": "Photos/2024/03/IMG_20240312_102408.jpg",
+      "truth": "bedroom-wall",
+      "label": "bedroom-wall",
+      "correct": true,
+      "answer": "bedroom-wall\nnone visible"
+    },
+    {
+      "file": "Photos/2026/10/IMG_20261030_140631.jpg",
+      "truth": "kitchen-oven",
+      "label": "kitchen-oven",
+      "correct": true,
+      "answer": "kitchen-oven\nNone visible."
+    },
+    {
+      "file": "Photos/2026/10/IMG_20261030_141152.jpg",
+      "truth": "living-room-carpet",
+      "label": "living-room-carpet",
+      "correct": true,
+      "answer": "living-room-carpet\nThere is a large brown stain on the light carpet."
+    },
+    {
+      "file": "Photos/2026/10/IMG_20261030_141607.jpg",
+      "truth": "living-room-wall",
+      "label": "living-room-wall",
+      "correct": true,
+      "answer": "living-room-wall\nSmall marks or holes are visible on the upper left section of the wall."
+    },
+    {
+      "file": "Photos/2026/10/IMG_20261030_142144.jpg",
+      "truth": "bathroom-tub",
+      "label": "bathroom-tub",
+      "correct": true,
+      "answer": "bathroom-tub\nnone visible"
+    },
+    {
+      "file": "Photos/2026/10/IMG_20261030_142719.jpg",
+      "truth": "bedroom-wall",
+      "label": "bedroom-wall",
+      "correct": true,
+      "answer": "bedroom-wall\nNone visible."
+    },
+    {
+      "file": "Photos/2026/10/IMG_20261030_143305.jpg",
+      "truth": "unclear",
+      "label": "unclear",
+      "correct": true,
+      "answer": "unclear\nnone visible"
+    },
+    {
+      "file": "Photos/2025/07/IMG_20250719_162000.jpg",
+      "truth": "not-a-spot",
+      "label": "not-a-spot",
+      "correct": true,
+      "answer": "not-a-spot\nnone visible"
+    },
+    {
+      "file": "Photos/2025/12/IMG_20251224_194500.jpg",
+      "truth": "not-a-spot",
+      "label": "not-a-spot",
+      "correct": true,
+      "answer": "not-a-spot\nnone visible"
+    }
+  ]
+}

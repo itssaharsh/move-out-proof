@@ -26,7 +26,7 @@ Collect only these, in one short question if several are missing:
 2. **The deduction letter** (letter mode only): the file name or folder the person names. If they do not know where it is, the document step below finds candidate letters and the person confirms one.
 3. Optional: the address or city of the home, used only to narrow the photo search when photos carry a location.
 
-Search windows, stated back to the person before searching:
+Search windows (tell the person which windows you are using in the same message as your first search, then continue without waiting for a reply):
 
 - Move-in window: from 14 days before to 30 days after the move-in date.
 - Move-out window: from 14 days before to 7 days after the move-out date. In gap mode there is no move-out window.
