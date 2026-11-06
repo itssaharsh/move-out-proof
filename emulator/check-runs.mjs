@@ -71,6 +71,9 @@ for (const file of runs) {
     check(run, "four charges shown", rows.length === 4, `rows=${rows.length}`);
     const bath = rows.find((r) => /bath/i.test(r.charge ?? "") || r.spot === "bathroom-tub");
     check(run, "bathroom charge shows no move-in photo", !!bath && !norm(bath.move_in_path), JSON.stringify(bath));
+    check(run, "bathroom charge keeps its dated move-out photo", !!bath && bath.spot === "bathroom-tub" && /IMG_20261030_142144/.test(bath.move_out_path ?? ""), JSON.stringify(bath));
+    const wall = rows.find((r) => r.spot === "living-room-wall");
+    check(run, "wall charge has both dated photos", !!wall && !!norm(wall.move_in_path) && !!norm(wall.move_out_path), JSON.stringify(wall));
     const carpet = rows.find((r) => r.spot === "living-room-carpet");
     check(run, "carpet charge has both dated photos", !!carpet && !!norm(carpet.move_in_path) && !!norm(carpet.move_out_path), JSON.stringify(carpet));
   }

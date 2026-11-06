@@ -96,7 +96,8 @@ Then take each deduction line, amount, the deposit, the total and the deadline f
 **Step 5. Match each charge to one spot (no delegation).**
 
 - Map each charge to one label from [the spot list](references/spots.md) by the room or item it names, for example "Oven deep clean" to `kitchen-oven` and "Carpet stain treatment, living room" to `living-room-carpet`.
-- A charge that names no spot (an admin fee, rent arrears) is shown as "No photo spot" and keeps its amount in the totals.
+- Use the "Charges it usually answers" column of the spot list: a charge that names a room or an item covered there maps to that spot even when its wording differs (a bathroom cleaning charge maps to `bathroom-tub`).
+- A charge that names no spot at all (an admin fee, rent arrears) is shown as "No photo spot" and keeps its amount in the totals.
 - When a charge could belong to two spots, ask the person which one (`waiting_user`). Never choose for them.
 - For each charge, the row holds: the move-in photo with its capture date and visible note, or the gap sentence; the move-out photo with its capture date and visible note, or the gap sentence. No verdicts.
 
