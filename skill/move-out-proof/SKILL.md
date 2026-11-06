@@ -107,7 +107,7 @@ Show the person, in one message: the windows used; the charge rows; the exact li
 
 **Step 7. Create the evidence pack, only after approval.**
 
-7a. `delegate --target photo-agent --instruction 'Create an album named Move-out Proof deposit evidence containing exactly the photos the person approved, identified by the photo identifiers (or, where none was given, the file paths) returned by the search step, in pair order, each move-in photo followed by its move-out photo. Create nothing else. Return the album identifier and the number of photos added.'`
+7a. `delegate --target photo-agent --instruction 'Create an album named Move-out Proof deposit evidence containing exactly the photos the person approved, identified by the photo identifiers (or, where none was given, the file paths) returned by the search step, in pair order, each move-in photo followed by its move-out photo, then every approved photo that has no pair. Create nothing else. Return the album identifier and the number of photos added.'`
 
 7b. `delegate --target file-agent --instruction 'Create a folder named Deposit_Evidence inside the folder that holds the deposit deduction letter the person confirmed. Create only this folder: do not move, copy or change any file in this step. Return the folder path.'`
 

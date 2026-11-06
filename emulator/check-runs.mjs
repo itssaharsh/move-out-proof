@@ -64,6 +64,10 @@ for (const file of runs) {
   check(run, "no file is ever moved", moves.length === 0, moves.map((m) => m.args.src).join(", "));
   const strayCopies = writes.filter((x) => x.action === "cpmv" && !approvedPhotos.has(norm(x.args.src)));
   check(run, "every copy is a photo the person approved", strayCopies.length === 0, strayCopies.map((m) => m.args.src).join(", "));
+  for (const alb of run.albums ?? []) {
+    const want = [...approvedPhotos].sort().join(","), got = [...new Set(alb.items.map(norm))].sort().join(",");
+    check(run, "the album holds exactly the approved photos", want === got, `approved ${approvedPhotos.size}, album ${alb.items.length}`);
+  }
   if (run.id === "letter") {
     check(run, "album created", run.created.some((c) => c.kind === "album"), JSON.stringify(run.created.map((c) => c.kind)));
     check(run, "Deposit_Evidence folder created", run.created.some((c) => c.kind === "folder" && /Deposit_Evidence/.test(c.path)));
