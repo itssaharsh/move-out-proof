@@ -107,7 +107,7 @@ Show the person, in one message: the windows used; the charge rows; the exact li
 
 **Step 7. Create the evidence pack, only after approval.**
 
-7a. `delegate --target photo-agent --instruction 'Create an album named Move-out Proof deposit evidence containing exactly the photos the person approved, identified by the photo identifiers (or, where none was given, the file paths) returned by the search step, in pair order, each move-in photo followed by its move-out photo, then every approved photo that has no pair. Create nothing else. Return the album identifier and the number of photos added.'`
+7a. `delegate --target photo-agent --instruction 'Create an album named Move-out Proof deposit evidence containing exactly the photos the person approved, identified by the photo identifiers (or, where none was given, the file paths) returned by the search step, in pair order, each move-in photo followed by its move-out photo, then every approved photo that has no pair. The ordered list of photo identifiers is at the end of this instruction: add them in that order, and do not run the vision model or any search in this step. Create nothing else. Return the album identifier and the number of photos added.'`
 
 7b. `delegate --target file-agent --instruction 'Create a folder named Deposit_Evidence inside the folder that holds the deposit deduction letter the person confirmed. Create only this folder: do not move, copy or change any file in this step. Return the folder path.'`
 
@@ -117,7 +117,7 @@ If the person asked for copies, also:
 
 7c. `delegate --target knowledge-agent --instruction 'Save the report the person approved as a Markdown file named move-out-proof-report inside the Deposit_Evidence folder returned by the file step; if that folder cannot be used, save it in the default location and return where it was saved. The report is the text between the line BEGIN REPORT and the line END REPORT at the end of this instruction: save exactly that text and nothing else. Return the saved file path and its size.'`
 
-When composing 7c, write the approved report, formatted as in [the report format](references/report-format.md), after the instruction, between a line BEGIN REPORT and a line END REPORT.
+When composing 7a, write the ordered list of approved photo identifiers after the instruction, one per line. When composing 7c, write the approved report, formatted as in [the report format](references/report-format.md), after the instruction, between a line BEGIN REPORT and a line END REPORT.
 
 If the folder step fails, do not run the copy or the report steps; report what was created and what was not, using the real locations the experts returned.
 

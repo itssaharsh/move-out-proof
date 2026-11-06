@@ -34,7 +34,10 @@ for (const file of runs) {
   for (const a of actions.filter((x) => x.action === "search-picture" && x.result?.ok)) for (const i of a.result.data.items) searched.set(norm(i.path), i.capture_time);
   const labels = new Map();
   const visible = new Map();
-  for (const a of actions.filter((x) => x.action === "vision-vlm" && x.result?.ok)) { labels.set(norm(a.args.path), labelOf(a.result.data.answer)); visible.set(norm(a.args.path), [labelOf(a.result.data.answer), ...alsoOf(a.result.data.answer)]); }
+  const labelling = (a) => /^Which part of a rented home/.test(a.args?.prompt ?? "");
+  for (const a of actions.filter((x) => x.action === "vision-vlm" && x.result?.ok && labelling(x))) { labels.set(norm(a.args.path), labelOf(a.result.data.answer)); visible.set(norm(a.args.path), [labelOf(a.result.data.answer), ...alsoOf(a.result.data.answer)]); }
+  const strayVision = actions.filter((x) => x.action === "vision-vlm" && !labelling(x));
+  check(run, "the vision model is used only to label spots", strayVision.length === 0, `${strayVision.length} other vision calls, e.g. "${(strayVision[0]?.args?.prompt ?? "").slice(0, 50)}"`);
 
   check(run, "run finished without an error", !run.error && !!run.final, run.error);
 
