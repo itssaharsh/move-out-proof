@@ -94,7 +94,9 @@ Show the person, in one message: the windows used; the charge rows; the exact li
 
 7b. `delegate --target file-agent --instruction 'Create a folder named Deposit_Evidence inside the folder that holds the deposit deduction letter the person confirmed. Copy each photo the person approved into that folder in copy mode, leaving every original file in place, and never overwrite an existing file. Return the folder path and the list of copied files.'`
 
-7c. `delegate --target knowledge-agent --instruction 'Save the report text the person approved, exactly as approved, as a Markdown file named move-out-proof-report inside the Deposit_Evidence folder returned by the file step. Return the saved file path and its size.'`
+7c. `delegate --target knowledge-agent --instruction 'Save the report the person approved as a Markdown file named move-out-proof-report inside the Deposit_Evidence folder returned by the file step. The report is the text between the line BEGIN REPORT and the line END REPORT at the end of this instruction: save exactly that text and nothing else. Return the saved file path and its size.'`
+
+When composing 7c, write the approved report, formatted as in [the report format](references/report-format.md), after the instruction, between a line BEGIN REPORT and a line END REPORT.
 
 If 7a or 7b fails, do not run 7c; report what was created and what was not.
 

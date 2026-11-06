@@ -75,7 +75,7 @@ function loadSkill(skillDir) {
 const PARENT_TOOLS = [
   { name: "delegate", description: "Hand one self-contained instruction to one registered expert. Returns {status, result, message}.",
     parameters: { type: "OBJECT", properties: { target: { type: "STRING", description: "file-agent | photo-agent | document-agent | knowledge-agent" }, instruction: { type: "STRING" } }, required: ["target", "instruction"] } },
-  { name: "ask_user", description: "Send the person a message and wait for the reply. For the approval step set approval=true and fill rows (one per charge, or one per spot in gap mode) and photos (exact paths that would be written).",
+  { name: "ask_user", description: "Send the person a message and wait for the reply. For the approval step set approval=true and fill rows (one per charge, or one per spot in gap mode) and photos (exact paths that would be written). When a side has no photo, leave its path and time empty and put the gap sentence in its note.",
     parameters: { type: "OBJECT", properties: {
       message: { type: "STRING" }, approval: { type: "BOOLEAN" },
       rows: { type: "ARRAY", items: { type: "OBJECT", properties: {
