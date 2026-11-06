@@ -1,0 +1,3 @@
+{"id": "empty-window", "title": "No photos in the move-in window", "fixture": "fixtures/apartment", "today": "2026-11-06",
+ "phrase": "Help me answer my deposit deduction letter. I moved in on 3 June 2019 and moved out on 30 October 2026. The letter is in Documents, Tenancy.",
+ "replies": ["No, leave it there."], "approve_plan": true, "approve_writes": true}

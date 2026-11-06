@@ -8,5 +8,8 @@
     "test": "node --test tests/*.test.mjs",
     "check:skill": "node tools/check-skill.mjs skill/move-out-proof",
     "kit": "sh tools/fetch-kit.sh"
+  },
+  "dependencies": {
+    "exifr": "^7.1.3"
   }
 }

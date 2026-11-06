@@ -1,0 +1,3 @@
+{"id": "gap", "title": "Before handing back the keys", "fixture": "fixtures/apartment", "today": "2026-10-23",
+ "phrase": "I hand back the keys next week. I moved in on 12 March 2024. Which parts of the flat have no move-in photo?",
+ "replies": ["No need to save it, thanks."], "approve_plan": true, "approve_writes": true}

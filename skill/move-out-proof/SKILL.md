@@ -62,7 +62,7 @@ Pass to each step only the real result the previous step returned: real file pat
 - Photos labelled `unclear` go to an Unclear list with their path and date. Photos labelled `not-a-spot` are counted and left out.
 - A spot with a photo on one side only is a gap: write "No dated move-in photo of this spot" or "No dated move-out photo of this spot". Never pair photos of two different spots.
 
-**Gap mode ends here.** Show a table of every spot found, with a mark for each side, then the spots with no dated move-in photo, and suggest photographing them now and looking for older photos of them. Save nothing unless the person asks; if they ask, save the table through Step 7c after approval.
+**Gap mode ends here.** Show two lists: the spots that have a dated move-in photo (with file name and date), and every label from [the spot list](references/spots.md) that has none. Ask the person to photograph the missing spots that exist in their home before handing back the keys, and to look for older photos of them. Save nothing unless the person asks; if they ask, save the lists through Step 7c after approval.
 
 **Step 4. Read the charges on the letter (letter mode).**
 
