@@ -45,6 +45,7 @@ export async function runExpert({ agent, instruction, model, nas, trace, gate, d
   const ctx = { agent, model, nas, trace, gate, delegateId };
   let calls = 0;
   let nudged = false;
+  let reparsed = false;
   for (;;) {
     const r = await model.generate({ agent, system: EXPERT_SYSTEM(agent), contents, tools });
     if (!r.calls.length && !r.text && !nudged) {
@@ -53,7 +54,17 @@ export async function runExpert({ agent, instruction, model, nas, trace, gate, d
       continue;
     }
     contents.push(r.content);
-    if (!r.calls.length) return parseResult(r.text);
+    if (!r.calls.length) {
+      const parsed = parseResult(r.text);
+      if (parsed.status === "failed" && parsed.result === null && !reparsed) {
+        // Unreadable final message: ask once for the JSON object only, as a harness would.
+        reparsed = true;
+        trace.add({ kind: "note", delegate: delegateId, text: `${agent} returned an unreadable result; asked once for the JSON object only` });
+        contents.push({ role: "user", parts: [{ text: "Reply with ONLY the JSON object described in your instructions, nothing else." }] });
+        continue;
+      }
+      return parsed;
+    }
     const responses = [];
     for (const c of r.calls) {
       calls += 1;
