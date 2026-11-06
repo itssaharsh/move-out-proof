@@ -4,24 +4,24 @@
   "phrase": "I hand back the keys next week. I moved in on 12 March 2024. Which parts of the flat have no move-in photo?",
   "fixture": "fixtures/apartment",
   "today": "2026-10-23",
-  "started_at": "2026-11-06T15:44:00.641Z",
-  "duration_ms": 28405,
-  "final": "Here is the breakdown of your move-in photos based on your search window (27 February 2024 to 11 April 2024):\n\n### Spots with a dated move-in photo:\n- **kitchen-oven**: `IMG_20240312_100412.jpg` (12 Mar 2024 10:04)\n- **kitchen-counter**: `IMG_20240312_100412.jpg` (12 Mar 2024 10:04, wider shot)\n- **kitchen-sink**: `IMG_20240312_100412.jpg` (12 Mar 2024 10:04, wider shot)\n- **living-room-carpet**: `IMG_20240312_101140.jpg` (12 Mar 2024 10:11)\n- **living-room-wall**: `IMG_20240312_101725.jpg` (12 Mar 2024 10:17)\n- **bedroom-wall**: `IMG_20240312_102408.jpg` (12 Mar 2024 10:24)\n- **window**: `IMG_20240312_101140.jpg` / `IMG_20240312_102408.jpg` (wider shot)\n\n### Spots with NO dated move-in photo:\n- **fridge**\n- **bathroom-tub**\n- **bathroom-sink**\n- **toilet**\n- **bedroom-carpet**\n- **front-door**\n\nPlease photograph the missing spots that exist in your home before handing back the keys, and check if you have older photos of them.",
+  "started_at": "2026-11-06T15:50:03.933Z",
+  "duration_ms": 31633,
+  "final": "**Move-in Window Searched:** 27 February 2024 to 11 April 2024\n**Photos Searched:** 4 photos (0 left out, 0 undated, 0 unclear)\n\n### Spots with a dated move-in photo:\n- **kitchen-oven**: `IMG_20240312_100412.jpg` (12 Mar 2024 10:04)\n- **kitchen-counter** (wider shot): `IMG_20240312_100412.jpg` (12 Mar 2024 10:04)\n- **kitchen-sink** (wider shot): `IMG_20240312_100412.jpg` (12 Mar 2024 10:04)\n- **living-room-carpet**: `IMG_20240312_101140.jpg` (12 Mar 2024 10:11)\n- **living-room-wall**: `IMG_20240312_101725.jpg` (12 Mar 2024 10:17)\n- **bedroom-wall**: `IMG_20240312_102408.jpg` (12 Mar 2024 10:24)\n- **window** (wider shot): `IMG_20240312_102408.jpg` (12 Mar 2024 10:24)\n\n### Parts of the flat with NO dated move-in photo:\n- **fridge**\n- **bathroom-tub**\n- **bathroom-sink**\n- **toilet**\n- **bedroom-carpet**\n- **front-door**\n\nPlease photograph these missing spots that exist in your home before handing back the keys next week, and look for any older photos of them!",
   "steps": [
     {
-      "t": 0,
+      "t": 1,
       "kind": "user",
       "text": "I hand back the keys next week. I moved in on 12 March 2024. Which parts of the flat have no move-in photo?"
     },
     {
-      "t": 3785,
+      "t": 5970,
       "kind": "delegate",
       "id": "d1",
       "target": "photo-agent",
-      "instruction": "Search the photo library for images (not videos and not screenshots) whose capture time falls inside the move-in window from 2024-02-27 to 2024-04-11. Where the library scene or object recognition can tell, keep only photos of the inside of a home (rooms, walls, floors, kitchen, bathroom, fixtures) and leave out photos of people, food, documents and outdoor scenes, saying how many were left out this way. For every photo return its photo identifier and file path as the library gives them, and its capture time read from the photo metadata. List photos with no capture time separately as undated. Change nothing. If a window has no photos, return an empty list for that window and say so plainly."
+      "instruction": "Search the photo library for images (not videos and not screenshots) whose capture time falls inside the move-in window from 2024-02-27 to 2024-04-11. Where the library scene or object recognition can tell, keep only photos of the inside of a home (rooms, walls, floors, kitchen, bathroom, fixtures) and leave out photos of people, food, documents and outdoor scenes, saying how many were left out this way. For every photo return its photo identifier and file path as the library gives them, and its capture time read from the photo metadata. List photos with no capture time separately as undated. Change nothing. If the window has no photos, return an empty list for that window and say so plainly."
     },
     {
-      "t": 4817,
+      "t": 7675,
       "kind": "action",
       "delegate": "d1",
       "agent": "photo-agent",
@@ -29,8 +29,8 @@
       "action": "search-picture",
       "args": {
         "end_time": "2024-04-11",
-        "start_time": "2024-02-27",
-        "file_type": "image"
+        "file_type": "image",
+        "start_time": "2024-02-27"
       },
       "result": {
         "ok": true,
@@ -61,11 +61,11 @@
           "photos_without_capture_time": 0
         }
       },
-      "ms": 39,
+      "ms": 46,
       "write": false
     },
     {
-      "t": 6143,
+      "t": 9739,
       "kind": "action",
       "delegate": "d1",
       "agent": "photo-agent",
@@ -73,62 +73,62 @@
       "action": "vision-vlm",
       "args": {
         "path": "Photos/2024/03/IMG_20240312_100412.jpg",
-        "prompt": "Is this photo showing the inside of a home (rooms, walls, floors, kitchen, bathroom, fixtures)? Answer yes or no."
+        "prompt": "What does this picture show? Is it inside a home (rooms, walls, floors, kitchen, bathroom, fixtures), or is it people, food, documents, or an outdoor scene?"
       },
       "result": {
         "ok": true,
         "data": {
           "path": "Photos/2024/03/IMG_20240312_100412.jpg",
-          "answer": "Yes."
+          "answer": "This picture shows the inside of a home, specifically a modern kitchen with white cabinets, a stainless steel stove and microwave, a dark tile backsplash, white countertops, and a wooden floor."
         }
       },
-      "ms": 24,
+      "ms": 1189,
       "write": false
     },
     {
-      "t": 6167,
+      "t": 10927,
       "kind": "action",
       "delegate": "d1",
       "agent": "photo-agent",
       "cli": "ug-photo",
       "action": "vision-vlm",
       "args": {
-        "prompt": "Is this photo showing the inside of a home (rooms, walls, floors, kitchen, bathroom, fixtures)? Answer yes or no.",
-        "path": "Photos/2024/03/IMG_20240312_101140.jpg"
+        "path": "Photos/2024/03/IMG_20240312_101140.jpg",
+        "prompt": "What does this picture show? Is it inside a home (rooms, walls, floors, kitchen, bathroom, fixtures), or is it people, food, documents, or an outdoor scene?"
       },
       "result": {
         "ok": true,
         "data": {
           "path": "Photos/2024/03/IMG_20240312_101140.jpg",
-          "answer": "Yes."
+          "answer": "This picture shows the interior of a home. It features a light-colored carpeted floor, a white wall, a white cabinet or TV stand with a television and a lamp, a window with white curtains, and a laptop in the foreground. There is also an irregular brown stain or spot on the carpet."
         }
       },
-      "ms": 1986,
+      "ms": 1598,
       "write": false
     },
     {
-      "t": 8153,
+      "t": 12525,
       "kind": "action",
       "delegate": "d1",
       "agent": "photo-agent",
       "cli": "ug-photo",
       "action": "vision-vlm",
       "args": {
-        "prompt": "Is this photo showing the inside of a home (rooms, walls, floors, kitchen, bathroom, fixtures)? Answer yes or no.",
+        "prompt": "What does this picture show? Is it inside a home (rooms, walls, floors, kitchen, bathroom, fixtures), or is it people, food, documents, or an outdoor scene?",
         "path": "Photos/2024/03/IMG_20240312_101725.jpg"
       },
       "result": {
         "ok": true,
         "data": {
           "path": "Photos/2024/03/IMG_20240312_101725.jpg",
-          "answer": "Yes."
+          "answer": "This image shows the interior of a home. It features a light-colored wall with a framed picture hanging in the center, a portion of a gray sofa with patterned throw pillows at the bottom, and a modern tripod lamp with a spherical, petal-like shade on the left side."
         }
       },
-      "ms": 1741,
+      "ms": 2306,
       "write": false
     },
     {
-      "t": 9894,
+      "t": 14831,
       "kind": "action",
       "delegate": "d1",
       "agent": "photo-agent",
@@ -136,115 +136,27 @@
       "action": "vision-vlm",
       "args": {
         "path": "Photos/2024/03/IMG_20240312_102408.jpg",
-        "prompt": "Is this photo showing the inside of a home (rooms, walls, floors, kitchen, bathroom, fixtures)? Answer yes or no."
+        "prompt": "What does this picture show? Is it inside a home (rooms, walls, floors, kitchen, bathroom, fixtures), or is it people, food, documents, or an outdoor scene?"
       },
       "result": {
         "ok": true,
         "data": {
           "path": "Photos/2024/03/IMG_20240312_102408.jpg",
-          "answer": "Yes."
+          "answer": "This picture shows the interior of a home, specifically a bedroom or a home office space. It features a bed with patterned bedding, a white desk with a computer monitor, speakers, a white molded plastic chair, a black armchair with a \"NEW YORK\" pillow, and a wood-paneled accent wall with a hanging light fixture."
         }
       },
-      "ms": 2606,
+      "ms": 2127,
       "write": false
     },
     {
-      "t": 13883,
-      "kind": "action",
-      "delegate": "d1",
-      "agent": "photo-agent",
-      "cli": "ug-photo",
-      "action": "meta",
-      "args": {
-        "path": "Photos/2024/03/IMG_20240312_100412.jpg"
-      },
-      "result": {
-        "ok": true,
-        "data": {
-          "id": "ph_a74f09fd95",
-          "path": "Photos/2024/03/IMG_20240312_100412.jpg",
-          "capture_time": "2024-03-12 10:04:12",
-          "software": "Move-out Proof staged fixture"
-        }
-      },
-      "ms": 1,
-      "write": false
-    },
-    {
-      "t": 13884,
-      "kind": "action",
-      "delegate": "d1",
-      "agent": "photo-agent",
-      "cli": "ug-photo",
-      "action": "meta",
-      "args": {
-        "path": "Photos/2024/03/IMG_20240312_101140.jpg"
-      },
-      "result": {
-        "ok": true,
-        "data": {
-          "id": "ph_0fd5181613",
-          "path": "Photos/2024/03/IMG_20240312_101140.jpg",
-          "capture_time": "2024-03-12 10:11:40",
-          "software": "Move-out Proof staged fixture"
-        }
-      },
-      "ms": 0,
-      "write": false
-    },
-    {
-      "t": 13884,
-      "kind": "action",
-      "delegate": "d1",
-      "agent": "photo-agent",
-      "cli": "ug-photo",
-      "action": "meta",
-      "args": {
-        "path": "Photos/2024/03/IMG_20240312_101725.jpg"
-      },
-      "result": {
-        "ok": true,
-        "data": {
-          "id": "ph_d86421c923",
-          "path": "Photos/2024/03/IMG_20240312_101725.jpg",
-          "capture_time": "2024-03-12 10:17:25",
-          "software": "Move-out Proof staged fixture"
-        }
-      },
-      "ms": 0,
-      "write": false
-    },
-    {
-      "t": 13884,
-      "kind": "action",
-      "delegate": "d1",
-      "agent": "photo-agent",
-      "cli": "ug-photo",
-      "action": "meta",
-      "args": {
-        "path": "Photos/2024/03/IMG_20240312_102408.jpg"
-      },
-      "result": {
-        "ok": true,
-        "data": {
-          "id": "ph_a51f473f9b",
-          "path": "Photos/2024/03/IMG_20240312_102408.jpg",
-          "capture_time": "2024-03-12 10:24:08",
-          "software": "Move-out Proof staged fixture"
-        }
-      },
-      "ms": 0,
-      "write": false
-    },
-    {
-      "t": 15300,
+      "t": 18515,
       "kind": "delegate_result",
       "id": "d1",
       "target": "photo-agent",
       "status": "completed",
-      "message": "Found 4 interior home photos in the move-in window, with 0 photos left out and 0 undated photos.",
+      "message": "Found 4 photos inside a home during the move-in window, with 0 photos left out.",
       "result": {
-        "dated_photos": [
+        "photos": [
           {
             "capture_time": "2024-03-12 10:04:12",
             "id": "ph_a74f09fd95",
@@ -266,27 +178,27 @@
             "path": "Photos/2024/03/IMG_20240312_102408.jpg"
           }
         ],
-        "left_out_count": 0,
-        "undated_photos": []
+        "undated": [],
+        "left_out_count": 0
       }
     },
     {
-      "t": 18523,
+      "t": 22202,
       "kind": "delegate",
       "id": "d2",
       "target": "photo-agent",
-      "instruction": "For each of the following photos, run the vision model on that single image with this prompt: Which part of a rented home does this photo show? Answer on the first line with exactly one label for the main subject, from this list: kitchen-oven, kitchen-counter, kitchen-sink, fridge, bathroom-tub, bathroom-sink, toilet, living-room-wall, living-room-carpet, bedroom-wall, bedroom-carpet, window, front-door, not-a-spot, unclear. Use unclear when the photo is too dark or too blurry to tell. On the second line list any other labels from the same list that are also clearly visible, separated by commas, or write none. On the third line write one sentence about visible dirt, stains, marks or damage, or write none visible. Return the photo identifier, the path, the capture time from the search step, the main label, the other visible labels and the sentence for every photo. Do not guess a label for a photo you cannot read.\n\nPhotos:\n1. id: ph_a74f09fd95, path: Photos/2024/03/IMG_20240312_100412.jpg, capture_time: 2024-03-12 10:04:12\n2. id: ph_0fd5181613, path: Photos/2024/03/IMG_20240312_101140.jpg, capture_time: 2024-03-12 10:11:40\n3. id: ph_d86421c923, path: Photos/2024/03/IMG_20240312_101725.jpg, capture_time: 2024-03-12 10:17:25\n4. id: ph_a51f473f9b, path: Photos/2024/03/IMG_20240312_102408.jpg, capture_time: 2024-03-12 10:24:08"
+      "instruction": "For each of the following photos:\n- ID: ph_a74f09fd95, path: Photos/2024/03/IMG_20240312_100412.jpg, capture time: 2024-03-12 10:04:12\n- ID: ph_0fd5181613, path: Photos/2024/03/IMG_20240312_101140.jpg, capture time: 2024-03-12 10:11:40\n- ID: ph_d86421c923, path: Photos/2024/03/IMG_20240312_101725.jpg, capture time: 2024-03-12 10:17:25\n- ID: ph_a51f473f9b, path: Photos/2024/03/IMG_20240312_102408.jpg, capture time: 2024-03-12 10:24:08\n\nRun the vision model on each single image with this prompt: Which part of a rented home does this photo show? Answer on the first line with exactly one label for the main subject, from this list: kitchen-oven, kitchen-counter, kitchen-sink, fridge, bathroom-tub, bathroom-sink, toilet, living-room-wall, living-room-carpet, bedroom-wall, bedroom-carpet, window, front-door, not-a-spot, unclear. Use unclear when the photo is too dark or too blurry to tell. On the second line list any other labels from the same list that are also clearly visible, separated by commas, or write none. On the third line write one sentence about visible dirt, stains, marks or damage, or write none visible. Return the photo identifier, the path, the capture time from the search step, the main label, the other visible labels and the sentence for every photo. Do not guess a label for a photo you cannot read."
     },
     {
-      "t": 20989,
+      "t": 24894,
       "kind": "action",
       "delegate": "d2",
       "agent": "photo-agent",
       "cli": "ug-photo",
       "action": "vision-vlm",
       "args": {
-        "path": "Photos/2024/03/IMG_20240312_100412.jpg",
-        "prompt": "Which part of a rented home does this photo show? Answer on the first line with exactly one label for the main subject, from this list: kitchen-oven, kitchen-counter, kitchen-sink, fridge, bathroom-tub, bathroom-sink, toilet, living-room-wall, living-room-carpet, bedroom-wall, bedroom-carpet, window, front-door, not-a-spot, unclear. Use unclear when the photo is too dark or too blurry to tell. On the second line list any other labels from the same list that are also clearly visible, separated by commas, or write none. On the third line write one sentence about visible dirt, stains, marks or damage, or write none visible."
+        "prompt": "Which part of a rented home does this photo show? Answer on the first line with exactly one label for the main subject, from this list: kitchen-oven, kitchen-counter, kitchen-sink, fridge, bathroom-tub, bathroom-sink, toilet, living-room-wall, living-room-carpet, bedroom-wall, bedroom-carpet, window, front-door, not-a-spot, unclear. Use unclear when the photo is too dark or too blurry to tell. On the second line list any other labels from the same list that are also clearly visible, separated by commas, or write none. On the third line write one sentence about visible dirt, stains, marks or damage, or write none visible.",
+        "path": "Photos/2024/03/IMG_20240312_100412.jpg"
       },
       "result": {
         "ok": true,
@@ -299,7 +211,7 @@
       "write": false
     },
     {
-      "t": 20992,
+      "t": 24897,
       "kind": "action",
       "delegate": "d2",
       "agent": "photo-agent",
@@ -313,35 +225,14 @@
         "ok": true,
         "data": {
           "path": "Photos/2024/03/IMG_20240312_101140.jpg",
-          "answer": "living-room-carpet\nwindow, living-room-wall\nA large, blurry brown stain is visible on the white carpet."
+          "answer": "living-room-carpet\nnone\nThere is a large brown stain on the carpet."
         }
       },
-      "ms": 1,
+      "ms": 2,
       "write": false
     },
     {
-      "t": 20993,
-      "kind": "action",
-      "delegate": "d2",
-      "agent": "photo-agent",
-      "cli": "ug-photo",
-      "action": "vision-vlm",
-      "args": {
-        "path": "Photos/2024/03/IMG_20240312_101725.jpg",
-        "prompt": "Which part of a rented home does this photo show? Answer on the first line with exactly one label for the main subject, from this list: kitchen-oven, kitchen-counter, kitchen-sink, fridge, bathroom-tub, bathroom-sink, toilet, living-room-wall, living-room-carpet, bedroom-wall, bedroom-carpet, window, front-door, not-a-spot, unclear. Use unclear when the photo is too dark or too blurry to tell. On the second line list any other labels from the same list that are also clearly visible, separated by commas, or write none. On the third line write one sentence about visible dirt, stains, marks or damage, or write none visible."
-      },
-      "result": {
-        "ok": true,
-        "data": {
-          "path": "Photos/2024/03/IMG_20240312_101725.jpg",
-          "answer": "living-room-wall\nnone\nThere are a few small, faint dark marks visible on the wall."
-        }
-      },
-      "ms": 1,
-      "write": false
-    },
-    {
-      "t": 20994,
+      "t": 24899,
       "kind": "action",
       "delegate": "d2",
       "agent": "photo-agent",
@@ -349,7 +240,28 @@
       "action": "vision-vlm",
       "args": {
         "prompt": "Which part of a rented home does this photo show? Answer on the first line with exactly one label for the main subject, from this list: kitchen-oven, kitchen-counter, kitchen-sink, fridge, bathroom-tub, bathroom-sink, toilet, living-room-wall, living-room-carpet, bedroom-wall, bedroom-carpet, window, front-door, not-a-spot, unclear. Use unclear when the photo is too dark or too blurry to tell. On the second line list any other labels from the same list that are also clearly visible, separated by commas, or write none. On the third line write one sentence about visible dirt, stains, marks or damage, or write none visible.",
-        "path": "Photos/2024/03/IMG_20240312_102408.jpg"
+        "path": "Photos/2024/03/IMG_20240312_101725.jpg"
+      },
+      "result": {
+        "ok": true,
+        "data": {
+          "path": "Photos/2024/03/IMG_20240312_101725.jpg",
+          "answer": "living-room-wall\nnone\nnone visible"
+        }
+      },
+      "ms": 2,
+      "write": false
+    },
+    {
+      "t": 24901,
+      "kind": "action",
+      "delegate": "d2",
+      "agent": "photo-agent",
+      "cli": "ug-photo",
+      "action": "vision-vlm",
+      "args": {
+        "path": "Photos/2024/03/IMG_20240312_102408.jpg",
+        "prompt": "Which part of a rented home does this photo show? Answer on the first line with exactly one label for the main subject, from this list: kitchen-oven, kitchen-counter, kitchen-sink, fridge, bathroom-tub, bathroom-sink, toilet, living-room-wall, living-room-carpet, bedroom-wall, bedroom-carpet, window, front-door, not-a-spot, unclear. Use unclear when the photo is too dark or too blurry to tell. On the second line list any other labels from the same list that are also clearly visible, separated by commas, or write none. On the third line write one sentence about visible dirt, stains, marks or damage, or write none visible."
       },
       "result": {
         "ok": true,
@@ -358,23 +270,26 @@
           "answer": "bedroom-wall\nwindow\nnone visible"
         }
       },
-      "ms": 2,
+      "ms": 3,
       "write": false
     },
     {
-      "t": 22826,
+      "t": 26464,
       "kind": "delegate_result",
       "id": "d2",
       "target": "photo-agent",
       "status": "completed",
-      "message": "Successfully processed all photos with the vision model.",
+      "message": "Successfully analyzed all four photos using the vision model.",
       "result": [
         {
           "id": "ph_a74f09fd95",
           "path": "Photos/2024/03/IMG_20240312_100412.jpg",
           "capture_time": "2024-03-12 10:04:12",
           "main_label": "kitchen-oven",
-          "other_labels": "kitchen-counter, kitchen-sink",
+          "other_labels": [
+            "kitchen-counter",
+            "kitchen-sink"
+          ],
           "description": "none visible"
         },
         {
@@ -382,43 +297,45 @@
           "path": "Photos/2024/03/IMG_20240312_101140.jpg",
           "capture_time": "2024-03-12 10:11:40",
           "main_label": "living-room-carpet",
-          "other_labels": "window, living-room-wall",
-          "description": "A large, blurry brown stain is visible on the white carpet."
+          "other_labels": [],
+          "description": "There is a large brown stain on the carpet."
         },
         {
           "id": "ph_d86421c923",
           "path": "Photos/2024/03/IMG_20240312_101725.jpg",
           "capture_time": "2024-03-12 10:17:25",
           "main_label": "living-room-wall",
-          "other_labels": "none",
-          "description": "There are a few small, faint dark marks visible on the wall."
+          "other_labels": [],
+          "description": "none visible"
         },
         {
           "id": "ph_a51f473f9b",
           "path": "Photos/2024/03/IMG_20240312_102408.jpg",
           "capture_time": "2024-03-12 10:24:08",
           "main_label": "bedroom-wall",
-          "other_labels": "window",
+          "other_labels": [
+            "window"
+          ],
           "description": "none visible"
         }
       ]
     },
     {
-      "t": 28405,
+      "t": 31633,
       "kind": "finish",
-      "text": "Here is the breakdown of your move-in photos based on your search window (27 February 2024 to 11 April 2024):\n\n### Spots with a dated move-in photo:\n- **kitchen-oven**: `IMG_20240312_100412.jpg` (12 Mar 2024 10:04)\n- **kitchen-counter**: `IMG_20240312_100412.jpg` (12 Mar 2024 10:04, wider shot)\n- **kitchen-sink**: `IMG_20240312_100412.jpg` (12 Mar 2024 10:04, wider shot)\n- **living-room-carpet**: `IMG_20240312_101140.jpg` (12 Mar 2024 10:11)\n- **living-room-wall**: `IMG_20240312_101725.jpg` (12 Mar 2024 10:17)\n- **bedroom-wall**: `IMG_20240312_102408.jpg` (12 Mar 2024 10:24)\n- **window**: `IMG_20240312_101140.jpg` / `IMG_20240312_102408.jpg` (wider shot)\n\n### Spots with NO dated move-in photo:\n- **fridge**\n- **bathroom-tub**\n- **bathroom-sink**\n- **toilet**\n- **bedroom-carpet**\n- **front-door**\n\nPlease photograph the missing spots that exist in your home before handing back the keys, and check if you have older photos of them."
+      "text": "**Move-in Window Searched:** 27 February 2024 to 11 April 2024\n**Photos Searched:** 4 photos (0 left out, 0 undated, 0 unclear)\n\n### Spots with a dated move-in photo:\n- **kitchen-oven**: `IMG_20240312_100412.jpg` (12 Mar 2024 10:04)\n- **kitchen-counter** (wider shot): `IMG_20240312_100412.jpg` (12 Mar 2024 10:04)\n- **kitchen-sink** (wider shot): `IMG_20240312_100412.jpg` (12 Mar 2024 10:04)\n- **living-room-carpet**: `IMG_20240312_101140.jpg` (12 Mar 2024 10:11)\n- **living-room-wall**: `IMG_20240312_101725.jpg` (12 Mar 2024 10:17)\n- **bedroom-wall**: `IMG_20240312_102408.jpg` (12 Mar 2024 10:24)\n- **window** (wider shot): `IMG_20240312_102408.jpg` (12 Mar 2024 10:24)\n\n### Parts of the flat with NO dated move-in photo:\n- **fridge**\n- **bathroom-tub**\n- **bathroom-sink**\n- **toilet**\n- **bedroom-carpet**\n- **front-door**\n\nPlease photograph these missing spots that exist in your home before handing back the keys next week, and look for any older photos of them!"
     }
   ],
   "created": [],
   "albums": [],
   "usage": {
-    "calls": 13,
-    "input": 34405,
-    "output": 3266,
-    "thoughts": 2588,
+    "calls": 12,
+    "input": 33824,
+    "output": 3380,
+    "thoughts": 3068,
     "cached": 4,
     "by_model": {
-      "gemini-3.5-flash-lite": 13
+      "gemini-3.5-flash-lite": 12
     }
   }
 }

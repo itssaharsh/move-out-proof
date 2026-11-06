@@ -32,7 +32,7 @@ test("the approval step comes before every write, and every write delegate is af
 
 test("empty results stop the run with a plain sentence instead of widening the search", () => {
   assert.match(skill, /No photos were found between/);
-  assert.match(skill, /Do not widen the window/);
+  assert.match(skill, /Do not search the move-out window, widen the window/);
 });
 
 test("the vision prompt uses exactly the labels in references/spots.md", () => {

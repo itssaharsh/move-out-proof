@@ -46,9 +46,17 @@ Pass to each step only the real result the previous step returned: real photo id
 
 **Step 1. Find the photos in each window.**
 
-`delegate --target photo-agent --instruction 'Search the photo library for images (not videos and not screenshots) whose capture time falls inside the move-in window confirmed with the person, and separately inside the move-out window if there is one. Where the library scene or object recognition can tell, keep only photos of the inside of a home (rooms, walls, floors, kitchen, bathroom, fixtures) and leave out photos of people, food, documents and outdoor scenes, saying how many were left out this way. Search the move-in window first; if it has no photos, stop there and return the empty result without searching the move-out window. Use the location filter only if the person gave an address or city. For every photo return its photo identifier and file path as the library gives them, and its capture time read from the photo metadata. List photos with no capture time separately as undated. Change nothing. If a window has no photos, return an empty list for that window and say so plainly.'`
+1a. Move-in window first:
 
-- If either window returns no results, tell the person "No photos were found between" the two dates of that window, and stop. Do not widen the window or search other folders unless the person asks.
+`delegate --target photo-agent --instruction 'Search the photo library for images (not videos and not screenshots) whose capture time falls inside the move-in window confirmed with the person. If the library search offers scene or object filters, use them to keep only photos of the inside of a home (rooms, walls, floors, kitchen, bathroom, fixtures) and say how many were left out; do not run the vision model in this step. Use the location filter only if the person gave an address or city. For every photo return its photo identifier and file path as the library gives them, and its capture time read from the photo metadata. List photos with no capture time separately as undated. Change nothing. If there are no photos, return an empty list and say so plainly.'`
+
+- If the move-in window returns no results, tell the person "No photos were found between" the two dates of that window, and stop. Do not search the move-out window, widen the window or search other folders unless the person asks.
+
+1b. Then the move-out window (letter mode only), with the same instruction for the move-out window:
+
+`delegate --target photo-agent --instruction 'Search the photo library for images (not videos and not screenshots) whose capture time falls inside the move-out window confirmed with the person. If the library search offers scene or object filters, use them to keep only photos of the inside of a home (rooms, walls, floors, kitchen, bathroom, fixtures) and say how many were left out; do not run the vision model in this step. Use the location filter only if the person gave an address or city. For every photo return its photo identifier and file path as the library gives them, and its capture time read from the photo metadata. List photos with no capture time separately as undated. Change nothing. If there are no photos, return an empty list and say so plainly.'`
+
+- If the move-out window returns no results, say "No photos were found between" its two dates; the report can still show the move-in side, so ask the person whether to continue with move-in photos only (`waiting_user`).
 - If a window still holds more than 40 photos, label first the 40 captured closest to the move-in date (or, for the move-out window, the move-out date), tell the person how many were not labelled, and offer to label the rest afterwards.
 - Undated photos are never used as dated photos; mention how many there were.
 
