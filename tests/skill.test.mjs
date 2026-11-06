@@ -23,10 +23,11 @@ test("all five delegation states are handled", () => {
 test("the approval step comes before every write, and every write delegate is after it", () => {
   const approval = skill.indexOf("**Step 6. Ask for approval before any write.**");
   assert.ok(approval > 0);
-  const writeDelegates = delegates.filter((d) => /Create an album|Create a folder|Save the report/.test(d.text));
-  assert.equal(writeDelegates.length, 3);
+  const writeDelegates = delegates.filter((d) => /Create an album|Create a folder|Copy each photo|Save the report/.test(d.text));
+  assert.equal(writeDelegates.length, 4);
   for (const d of writeDelegates) assert.ok(skill.indexOf(d.line) > approval, d.line.slice(0, 50));
   assert.match(skill, /copy mode, leaving every original file in place/);
+  assert.match(skill, /Ask whether they also want copies/);
 });
 
 test("empty results stop the run with a plain sentence instead of widening the search", () => {

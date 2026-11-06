@@ -18,13 +18,13 @@ Renters. Moving out is when deposits are lost: a deduction letter arrives listin
 3. The vision model names the spot in each photo (from a fixed list such as kitchen-oven or living-room-carpet) and notes visible marks. Photos it cannot read are listed as Unclear instead of guessed.
 4. It reads the charges from your letter and lines up, under each charge, the move-in and move-out photo of that spot, with their dates.
 5. It shows you everything it plans to create and waits for your approval.
-6. After you approve: an album of the pairs, a `Deposit_Evidence` folder next to your letter with copies of the photos, and a report.
+6. After you approve: an album of the pairs, a `Deposit_Evidence` folder next to your letter, and a report. If you ask, it also puts copies of the paired photos in that folder for attaching to an email. The NAS may ask you to confirm each write; that is expected.
 
 ## What it will not do
 
 - It does not say whether a charge is fair. You decide what to dispute.
 - It does not invent a photo, a date or a charge. A missing photo is shown as a gap.
-- It does not delete, move, send or share anything. Originals stay where they are; the folder holds copies.
+- It does not delete, move, send or share anything. Originals stay where they are; any copies are copies.
 - It does not write anything before you approve the exact list.
 
 ## Gap mode, before you move out

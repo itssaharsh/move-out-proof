@@ -38,22 +38,23 @@ Search windows (tell the person which windows you are using in the same message 
 - `ug-filesystem` → `file-agent`
 - `ug-knowledge` → `knowledge-agent`
 
-Actions this workflow relies on, all in the public capability catalog: `search-picture` with a start and end time, `meta` for capture time, `vision-vlm` on one image with a prompt, and `create-album` with chosen items (approval) from `ug-photo`; `extract` with the contract schema and `qa` from `ug-document`; `mkdir` and `cpmv` in copy mode (approval) from `ug-filesystem`; `save-text` (approval) from `ug-knowledge`.
+Actions this workflow relies on, all in the public capability catalog: `search-picture` with a start and end time, `meta` for capture time, `vision-vlm` on one image with a prompt, `vision-ocr` for a letter saved as a picture, and `create-album` with chosen items (approval) from `ug-photo`; `extract` with the contract schema and `qa` from `ug-document`; `mkdir` and `cpmv` in copy mode (approval) from `ug-filesystem`; `save-text` (approval) from `ug-knowledge`.
 
 # Workflow
 
-Pass to each step only the real result the previous step returned: real file paths, real capture times, real charge lines. Never pass a guess downstream.
+Pass to each step only the real result the previous step returned: real photo identifiers and file paths, real capture times, real charge lines. Never pass a guess downstream.
 
 **Step 1. Find the photos in each window.**
 
-`delegate --target photo-agent --instruction 'Search the photo library for images (not videos) whose capture time falls inside the move-in window confirmed with the person, and separately inside the move-out window if there is one. Use the location filter only if the person gave an address or city. For every photo return its file path and its capture time read from the photo metadata. Change nothing. If a window has no photos, return an empty list for that window and say so plainly.'`
+`delegate --target photo-agent --instruction 'Search the photo library for images (not videos and not screenshots) whose capture time falls inside the move-in window confirmed with the person, and separately inside the move-out window if there is one. Where the library scene or object recognition can tell, keep only photos of the inside of a home (rooms, walls, floors, kitchen, bathroom, fixtures) and leave out photos of people, food, documents and outdoor scenes, saying how many were left out this way. Use the location filter only if the person gave an address or city. For every photo return its photo identifier and file path as the library gives them, and its capture time read from the photo metadata. List photos with no capture time separately as undated. Change nothing. If a window has no photos, return an empty list for that window and say so plainly.'`
 
 - If either window returns no results, tell the person "No photos were found between" the two dates of that window, and stop. Do not widen the window or search other folders unless the person asks.
-- If a window holds more than 80 photos, tell the person the count and ask (`waiting_user`) whether to label them all or narrow by folder or location first.
+- If a window still holds more than 40 photos, label first the 40 captured closest to the move-in date (or, for the move-out window, the move-out date), tell the person how many were not labelled, and offer to label the rest afterwards.
+- Undated photos are never used as dated photos; mention how many there were.
 
 **Step 2. Name the spot in each photo.**
 
-`delegate --target photo-agent --instruction 'For each photo path returned by the search step, run the vision model on that single image with this prompt: Which part of a rented home does this photo show? Answer on the first line with exactly one label for the main subject, from this list: kitchen-oven, kitchen-counter, kitchen-sink, fridge, bathroom-tub, bathroom-sink, toilet, living-room-wall, living-room-carpet, bedroom-wall, bedroom-carpet, window, front-door, not-a-spot, unclear. Use unclear when the photo is too dark or too blurry to tell. On the second line list any other labels from the same list that are also clearly visible, separated by commas, or write none. On the third line write one sentence about visible dirt, stains, marks or damage, or write none visible. Return the path, the capture time from the search step, the main label, the other visible labels and the sentence for every photo. Do not guess a label for a photo you cannot read.'`
+`delegate --target photo-agent --instruction 'For each photo returned by the search step (at most 40 per window, as selected above), run the vision model on that single image with this prompt: Which part of a rented home does this photo show? Answer on the first line with exactly one label for the main subject, from this list: kitchen-oven, kitchen-counter, kitchen-sink, fridge, bathroom-tub, bathroom-sink, toilet, living-room-wall, living-room-carpet, bedroom-wall, bedroom-carpet, window, front-door, not-a-spot, unclear. Use unclear when the photo is too dark or too blurry to tell. On the second line list any other labels from the same list that are also clearly visible, separated by commas, or write none. On the third line write one sentence about visible dirt, stains, marks or damage, or write none visible. Return the photo identifier, the path, the capture time from the search step, the main label, the other visible labels and the sentence for every photo. Do not guess a label for a photo you cannot read.'`
 
 **Step 3. Build the pairs (no delegation).**
 
@@ -75,7 +76,14 @@ Ask the person to confirm one candidate (`waiting_user`). If there is no candida
 
 `delegate --target document-agent --instruction 'From the deposit deduction letter the person confirmed, extract every proposed deduction using the contract schema with full content scope. For each line return the description exactly as written, the amount with its currency, and any room or item it names. Also return the deposit amount, the total of deductions, the letter date and any deadline for the tenant to respond. If no deduction line can be read, return an empty result and say so.'`
 
-If the letter yields no deduction lines, say so, stop letter mode and offer gap mode.
+If the confirmed letter is a picture (a photo or a scan saved as an image) and the extraction returns no lines, read it with text recognition instead:
+
+`delegate --target photo-agent --instruction 'Run text recognition on the picture of the deposit deduction letter the person confirmed and return the full recognised text exactly as read, line by line. Change nothing. If no text can be read, return an empty result and say so.'`
+
+Then take each deduction line, amount, the deposit, the total and the deadline from that returned text, copying each value exactly as it appears.
+
+- Check that the amounts add up to the total printed on the letter, and to any amount the person mentioned. If they do not, show both figures and ask the person (`waiting_user`) before going on.
+- If the letter yields no deduction lines at all, say so, stop letter mode and offer gap mode.
 
 **Step 5. Match each charge to one spot (no delegation).**
 
@@ -86,19 +94,23 @@ If the letter yields no deduction lines, say so, stop letter mode and offer gap 
 
 **Step 6. Ask for approval before any write.**
 
-Show the person, in one message: the windows used; the charge rows; the exact list of photos that will go into the album and the folder; the album name `Move-out Proof deposit evidence`; the folder `Deposit_Evidence` inside the folder that holds the letter; the report file name `move-out-proof-report`. Wait for approval (`waiting_approval`). If the person declines, treat it as `cancelled` and create nothing.
+Show the person, in one message: the windows used; the charge rows; the exact list of photos that will go into the album; the album name `Move-out Proof deposit evidence`; the folder `Deposit_Evidence` inside the folder that holds the letter; the report file name `move-out-proof-report`. Ask whether they also want copies of the paired photos in that folder (useful for attaching to an email). Tell them the NAS may ask them to confirm each write again, including each copy; that is expected. Wait for approval (`waiting_approval`). If the person declines, treat it as `cancelled` and create nothing.
 
 **Step 7. Create the evidence pack, only after approval.**
 
-7a. `delegate --target photo-agent --instruction 'Create an album named Move-out Proof deposit evidence containing exactly the photo paths the person approved, in pair order, each move-in photo followed by its move-out photo. Create nothing else. Return the album identifier and the number of photos added.'`
+7a. `delegate --target photo-agent --instruction 'Create an album named Move-out Proof deposit evidence containing exactly the photos the person approved, identified by the photo identifiers (or, where none was given, the file paths) returned by the search step, in pair order, each move-in photo followed by its move-out photo. Create nothing else. Return the album identifier and the number of photos added.'`
 
-7b. `delegate --target file-agent --instruction 'Create a folder named Deposit_Evidence inside the folder that holds the deposit deduction letter the person confirmed. Copy each photo the person approved into that folder in copy mode, leaving every original file in place, and never overwrite an existing file. Return the folder path and the list of copied files.'`
+7b. `delegate --target file-agent --instruction 'Create a folder named Deposit_Evidence inside the folder that holds the deposit deduction letter the person confirmed. Return the folder path.'`
 
-7c. `delegate --target knowledge-agent --instruction 'Save the report the person approved as a Markdown file named move-out-proof-report inside the Deposit_Evidence folder returned by the file step. The report is the text between the line BEGIN REPORT and the line END REPORT at the end of this instruction: save exactly that text and nothing else. Return the saved file path and its size.'`
+If the person asked for copies, also:
+
+`delegate --target file-agent --instruction 'Copy each photo the person approved into the Deposit_Evidence folder returned by the previous file step, in copy mode, leaving every original file in place and never overwriting an existing file. Return the list of copied files and any that could not be copied.'`
+
+7c. `delegate --target knowledge-agent --instruction 'Save the report the person approved as a Markdown file named move-out-proof-report inside the Deposit_Evidence folder returned by the file step; if that folder cannot be used, save it in the default location and return where it was saved. The report is the text between the line BEGIN REPORT and the line END REPORT at the end of this instruction: save exactly that text and nothing else. Return the saved file path and its size.'`
 
 When composing 7c, write the approved report, formatted as in [the report format](references/report-format.md), after the instruction, between a line BEGIN REPORT and a line END REPORT.
 
-If 7a or 7b fails, do not run 7c; report what was created and what was not.
+If the folder step fails, do not run the copy or the report steps; report what was created and what was not, using the real locations the experts returned.
 
 # Completion and failure
 

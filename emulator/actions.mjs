@@ -2,6 +2,10 @@
 // Each expert sees only its own CLIs. Writes go through the approval gate, as the catalog's
 // "gateway" and "workflow" approval values require.
 import path from "node:path";
+import { createHash } from "node:crypto";
+
+// Stable photo identifiers, as a photo library would hand out.
+export const photoId = (p) => "ph_" + createHash("sha1").update(p).digest("hex").slice(0, 10);
 
 const S = (description) => ({ type: "STRING", description });
 const ok = (data) => ({ ok: true, data });
@@ -44,7 +48,7 @@ const ACTIONS = {
       let items = photos;
       if (a.start_time || a.end_time) items = items.filter((p) => inWindow(p.capture_time, a.start_time ?? "0000", a.end_time ?? "9999"));
       const undated = photos.filter((p) => !p.capture_time).length;
-      return ok({ total: items.length, items: items.map((p) => ({ path: p.path, capture_time: p.capture_time })), photos_without_capture_time: undated, location_filter: a.location ? "no location metadata in this library; filter not applied" : undefined });
+      return ok({ total: items.length, items: items.map((p) => ({ id: photoId(p.path), path: p.path, capture_time: p.capture_time })), photos_without_capture_time: undated, location_filter: a.location ? "no location metadata in this library; filter not applied" : undefined });
     },
   },
   meta: {
@@ -52,7 +56,7 @@ const ACTIONS = {
     decl: { description: "Read EXIF metadata of one photo (capture time, software).", parameters: { type: "OBJECT", properties: { path: S("photo path") }, required: ["path"] } },
     async run(a, ctx) {
       const p = (await ctx.nas.photos()).find((x) => x.path === a.path);
-      return p ? ok({ path: p.path, capture_time: p.capture_time, software: p.software }) : fail("NOT_FOUND", `no photo at ${a.path}`);
+      return p ? ok({ id: photoId(p.path), path: p.path, capture_time: p.capture_time, software: p.software }) : fail("NOT_FOUND", `no photo at ${a.path}`);
     },
   },
   vision_vlm: {
@@ -65,12 +69,23 @@ const ACTIONS = {
       return ok({ path: a.path, answer: text });
     },
   },
+  vision_ocr: {
+    cli: "ug-photo", action: "vision-ocr", approval: "none",
+    decl: { description: "Recognise the text in ONE picture (OCR); returns the text.", parameters: { type: "OBJECT", properties: { path: S("picture path") }, required: ["path"] } },
+    async run(a, ctx) {
+      if (!ctx.nas.exists(a.path)) return fail("NOT_FOUND", `no picture at ${a.path}`);
+      const mime = a.path.endsWith(".pdf") ? "application/pdf" : "image/jpeg";
+      const text = await askModel(ctx, [{ inlineData: { mimeType: mime, data: ctx.nas.readBytes(a.path).toString("base64") } }, { text: "Transcribe all text in this picture exactly, line by line. Output only the text." }], "You are an OCR engine. Output only the recognised text.");
+      return ok({ path: a.path, text });
+    },
+  },
   create_album: {
     cli: "ug-photo", action: "create-album", approval: "workflow",
-    decl: { description: "Create a photo album with the given photo paths (needs the person's approval).", parameters: { type: "OBJECT", properties: { album_name: S("album name"), add_item: { type: "ARRAY", items: { type: "STRING" }, description: "photo paths to add, in order" } }, required: ["album_name", "add_item"] } },
+    decl: { description: "Create a photo album with the given photos, by photo identifier or path (needs the person's approval).", parameters: { type: "OBJECT", properties: { album_name: S("album name"), add_item: { type: "ARRAY", items: { type: "STRING" }, description: "photo identifiers or paths to add, in order" } }, required: ["album_name", "add_item"] } },
     async run(a, ctx) {
-      const items = asList(a.add_item);
-      return ok(ctx.nas.createAlbum(a.album_name, items));
+      const byId = Object.fromEntries((await ctx.nas.photos()).map((p) => [photoId(p.path), p.path]));
+      const items = asList(a.add_item).map((i) => byId[i] ?? i);
+      try { return ok(ctx.nas.createAlbum(a.album_name, items)); } catch (e) { return fail("ALBUM_FAILED", e.message); }
     },
   },
   // ---------------- ug-document (document-agent) ----------------
@@ -145,7 +160,7 @@ const ACTIONS = {
 };
 
 export const EXPERTS = {
-  "photo-agent": ["search_picture", "meta", "vision_vlm", "create_album"],
+  "photo-agent": ["search_picture", "meta", "vision_vlm", "vision_ocr", "create_album"],
   "document-agent": ["qa", "extract"],
   "file-agent": ["ls", "stat", "mkdir", "cpmv"],
   "knowledge-agent": ["save_text"],

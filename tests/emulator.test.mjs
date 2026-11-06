@@ -96,3 +96,13 @@ test("list and JSON helpers tolerate the shapes models send", () => {
   assert.equal(_test.inWindow("2024-03-12 10:00:00", "2024-02-27", "2024-04-11"), true);
   assert.equal(_test.inWindow(null, "2024-02-27", "2024-04-11"), false);
 });
+
+test("albums accept the photo identifiers that search returns", async () => {
+  const { nas } = library();
+  const { photoId } = await import("../emulator/actions.mjs");
+  const id = photoId("Photos/2024/03/IMG_1.jpg");
+  const model = new ScriptedModel({ "photo-agent": [{ calls: [{ name: "create_album", args: { album_name: "A", add_item: [id] } }] }, done({})] });
+  const trace = new Trace({});
+  await runExpert({ agent: "photo-agent", instruction: "album", model, nas, trace, gate: async () => true, delegateId: "d1" });
+  assert.deepEqual(nas.albums[0].items, ["Photos/2024/03/IMG_1.jpg"]);
+});
