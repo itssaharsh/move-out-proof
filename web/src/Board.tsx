@@ -130,7 +130,7 @@ function Created({ view, open, onReport }: { view: View; open: Open; onReport: (
               <p class="mk-k">{w.kind === "album" ? "Album" : w.kind === "folder" ? "Folder" : w.kind === "report" ? "Report" : "Copies"}</p>
               <p class="mk-t">{w.title.replace(/\//g, "/\u200b")}</p>
               <p class="mk-d">{w.detail}</p>
-              {w.items?.length ? <div class="mk-strip">{w.items.slice(0, 8).map((p) => <button key={p} onClick={() => open({ src: photoUrl(p), caption: fileName(p) })} aria-label={`Enlarge ${fileName(p)}`}><img src={photoUrl(p)} alt="" loading="lazy" /></button>)}</div> : null}
+              {w.items?.length ? <div class="mk-strip">{w.items.slice(0, 8).map((p) => /\.(jpe?g|png|heic)$/i.test(p) ? <button key={p} onClick={() => open({ src: photoUrl(p), caption: fileName(p) })} aria-label={`Enlarge ${fileName(p)}`}><img src={photoUrl(p)} alt="" loading="lazy" /></button> : <span key={p} class="mk-file" title={fileName(p)}>{(p.split(".").pop() ?? "file").toUpperCase()}</span>)}</div> : null}
               {w.kind === "report" && w.content ? <button class="link" onClick={() => onReport(w.content!, w.title)}>Read the report</button> : null}
             </div>
           </li>

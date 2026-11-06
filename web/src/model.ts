@@ -123,8 +123,11 @@ export function derive(run: Run, events: Ev[], n: number): View {
         else if (s.action === "cpmv") {
           const last = view.writes.find((w) => w.kind === "copies");
           const name = String(r.data?.dst ?? "").split("/").pop() ?? "";
-          if (last) { last.items!.push(a.src); last.detail = `${last.items!.length} photos copied, originals untouched`; }
-          else view.writes.push({ kind: "copies", title: "Copies of the evidence photos", detail: "1 photo copied, originals untouched", items: [a.src], key: `w${i}` });
+          if (last) last.items!.push(a.src);
+          else view.writes.push({ kind: "copies", title: "Copies of the evidence photos", detail: "", items: [a.src], key: `w${i}` });
+          const cur = last ?? view.writes[view.writes.length - 1];
+          const photos = cur.items!.filter((x) => /\.(jpe?g|png|heic)$/i.test(x)).length, other = cur.items!.length - photos;
+          cur.detail = `${photos} ${photos === 1 ? "photo" : "photos"}${other ? ` and ${other} other ${other === 1 ? "file" : "files"}` : ""} copied, originals untouched`;
           void name;
         } else if (s.action === "save-text") view.writes.push({ kind: "report", title: String(r.data?.outputFile ?? a.filename_hint ?? "report").split("/").pop()!, detail: `${r.data?.outputFile ?? ""}${r.data?.contentBytes ? ` · ${r.data.contentBytes} bytes` : ""}`, content: a.content, key: `w${i}` });
       }

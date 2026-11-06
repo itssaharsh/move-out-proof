@@ -263,3 +263,5 @@ h1, h2, h3, h4 { margin: 0; }
 @media (max-width: 820px) { .hero-copy .scen-l { order: 7; margin: 0 0 -14px; } }
 
 .prev-cap { margin: 10px 2px 0; font-size: 14px; line-height: 1.45; color: var(--muted); }
+
+.mk-file { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 33px; border-radius: 4px; background: #fff; border: 1px solid var(--line); font: 600 10px/1 var(--mono); color: var(--muted); letter-spacing: .04em; }

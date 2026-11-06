@@ -112,7 +112,7 @@ Show the person, in one message: the windows used; the charge rows; the exact li
 
 If the person asked for copies, also:
 
-`delegate --target file-agent --instruction 'Copy each photo the person approved into the Deposit_Evidence folder returned by the previous file step, in copy mode, leaving every original file in place and never overwriting an existing file. Return the list of copied files and any that could not be copied.'`
+`delegate --target file-agent --instruction 'Copy each photo the person approved, and only those photos (not the letter and no other file), into the Deposit_Evidence folder returned by the previous file step, in copy mode, leaving every original file in place and never overwriting an existing file. Return the list of copied files and any that could not be copied.'`
 
 7c. `delegate --target knowledge-agent --instruction 'Save the report the person approved as a Markdown file named move-out-proof-report inside the Deposit_Evidence folder returned by the file step; if that folder cannot be used, save it in the default location and return where it was saved. The report is the text between the line BEGIN REPORT and the line END REPORT at the end of this instruction: save exactly that text and nothing else. Return the saved file path and its size.'`
 
