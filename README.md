@@ -1,6 +1,6 @@
 # Move-out Proof
 
-**Your landlord kept part of your deposit. Move-out Proof finds your dated move-in and move-out photos on the NAS and lines them up against every charge.**
+**Your landlord kept part of your deposit. Move-out Proof finds your dated move-in and move-out photos on your UGREEN NAS and lines them up against every charge.**
 
 A Skill for the UGREEN AI NAS assistant, built for the UGREEN Hackathon 2026 on AI NAS.
 
