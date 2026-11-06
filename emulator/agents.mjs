@@ -137,7 +137,7 @@ export async function runParent({ skillDir, scenario, model, nas, trace, today, 
         if (a.approval) {
           approvalsAsked.n += 1;
           trace.add({ kind: "approval_request", text: a.message, rows: a.rows ?? [], photos: a.photos ?? [] });
-          reply = scenario.approve_plan === false ? "No, do not create anything." : "Yes, create them.";
+          reply = scenario.approve_plan === false ? "No, do not create anything." : (scenario.approve_reply ?? "Yes, create them.");
         } else {
           trace.add({ kind: "assistant", text: a.message });
           reply = replies.shift() ?? "I have nothing more to add.";

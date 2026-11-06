@@ -1,3 +1,13 @@
-{"id": "letter", "title": "Deduction letter: four charges", "fixture": "fixtures/apartment", "today": "2026-11-06",
+{
+ "id": "letter",
+ "title": "Deduction letter: four charges",
+ "fixture": "fixtures/apartment",
+ "today": "2026-11-06",
  "phrase": "My landlord is taking £420 off my deposit. I moved in on 12 March 2024 and moved out on 30 October 2026. The letter is in Documents, Tenancy.",
- "replies": ["Yes, that is the letter."], "approve_plan": true, "approve_writes": true}
+ "replies": [
+  "Yes, that is the letter."
+ ],
+ "approve_plan": true,
+ "approve_writes": true,
+ "approve_reply": "Yes, create them, and copy the photos into the folder too."
+}
