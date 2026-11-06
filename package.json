@@ -1,0 +1,7 @@
+{
+  "name": "move-out-proof",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "description": "UGREEN AI NAS Skill (move-out-proof) plus a laptop emulator and replay page used for the walkthrough"
+}
