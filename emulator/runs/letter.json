@@ -4,9 +4,9 @@
   "phrase": "My landlord is taking £420 off my deposit. I moved in on 12 March 2024 and moved out on 30 October 2026. The letter is in Documents, Tenancy.",
   "fixture": "fixtures/apartment",
   "today": "2026-11-06",
-  "started_at": "2026-11-06T16:48:25.976Z",
-  "duration_ms": 210425,
-  "final": "I have completed the evidence pack for your deposit deduction letter.\n\n**Summary of actions:**\n- **Windows searched:** Move-in (27 Feb 2024 - 11 Apr 2024) and Move-out (16 Oct 2026 - 6 Nov 2026).\n- **Photos:** 12 photos were searched and labelled, with 1 photo marked as unclear.\n- **Charges:** 4 charges were processed. 3 have both move-in and move-out photos, and 1 has only a move-out photo.\n- **Created:**\n  - An album named \"Move-out Proof deposit evidence\" containing the paired photos.\n  - A folder named `Deposit_Evidence` inside `Documents/Tenancy`.\n  - A report file `move-out-proof-report.md` saved in that folder.\n  - Copies of the paired photos have been placed in the `Deposit_Evidence` folder for your use.\n\nYou can now review the report and the album to decide how you wish to respond to the deduction letter. Please remember that this report does not determine the fairness of the charges; you decide what to dispute.",
+  "started_at": "2026-11-06T16:59:30.872Z",
+  "duration_ms": 154172,
+  "final": "I have successfully created your evidence pack.\n\n- **Windows used:** 27 Feb 2024 – 11 Apr 2024 (move-in) and 16 Oct 2026 – 6 Nov 2026 (move-out).\n- **Photos:** 4 searched in the move-in window, 6 in the move-out window. 9 were labelled, 1 was unclear, and 0 were left out.\n- **Charges:** 3 charges have both dated photos, 1 charge has only a move-out photo (Bathroom deep clean).\n- **Evidence:**\n    - An album named `Move-out Proof deposit evidence` has been created.\n    - A folder `Documents/Tenancy/Deposit_Evidence` now contains the report `move-out-proof-report.md` and copies of the paired photos.\n\nRemember, this report presents facts from your own library and does not judge whether any charge is fair; you decide what to dispute. Good luck with your deposit claim.",
   "steps": [
     {
       "t": 0,
@@ -14,23 +14,23 @@
       "text": "My landlord is taking £420 off my deposit. I moved in on 12 March 2024 and moved out on 30 October 2026. The letter is in Documents, Tenancy."
     },
     {
-      "t": 2798,
+      "t": 2945,
       "kind": "delegate",
       "id": "d1",
       "target": "photo-agent",
       "instruction": "Search the photo library for images (not videos and not screenshots) whose capture time falls inside the move-in window (2024-02-27 to 2024-04-11). If the library search offers scene or object filters, use them to keep only photos of the inside of a home (rooms, walls, floors, kitchen, bathroom, fixtures) and say how many were left out; do not run the vision model in this step. Use the location filter only if the person gave an address or city. For every photo return its photo identifier and file path as the library gives them, and its capture time read from the photo metadata. List photos with no capture time separately as undated. Change nothing. If there are no photos, return an empty list and say so plainly."
     },
     {
-      "t": 4432,
+      "t": 7368,
       "kind": "action",
       "delegate": "d1",
       "agent": "photo-agent",
       "cli": "ug-photo",
       "action": "search-picture",
       "args": {
-        "start_time": "2024-02-27",
-        "scene": "home interior",
         "file_type": "image",
+        "scene": "home interior",
+        "start_time": "2024-02-27",
         "end_time": "2024-04-11"
       },
       "result": {
@@ -63,16 +63,16 @@
           "scene_filter": "scene recognition is not available in this emulator; every photo in the window is returned"
         }
       },
-      "ms": 39,
+      "ms": 40,
       "write": false
     },
     {
-      "t": 7443,
+      "t": 10369,
       "kind": "delegate_result",
       "id": "d1",
       "target": "photo-agent",
       "status": "completed",
-      "message": "Found 4 photos within the specified date range, though the scene filter could not be applied.",
+      "message": "Found 4 photos; 0 were left out because scene recognition is not available.",
       "result": {
         "photos": [
           {
@@ -96,29 +96,28 @@
             "capture_time": "2024-03-12 10:24:08"
           }
         ],
-        "undated_photos": [],
-        "scene_filter_note": "Scene recognition is not available in this emulator, so 0 photos were filtered out."
+        "undated": []
       }
     },
     {
-      "t": 7443,
+      "t": 10369,
       "kind": "delegate",
       "id": "d2",
       "target": "photo-agent",
       "instruction": "Search the photo library for images (not videos and not screenshots) whose capture time falls inside the move-out window (2026-10-16 to 2026-11-06). If the library search offers scene or object filters, use them to keep only photos of the inside of a home (rooms, walls, floors, kitchen, bathroom, fixtures) and say how many were left out; do not run the vision model in this step. Use the location filter only if the person gave an address or city. For every photo return its photo identifier and file path as the library gives them, and its capture time read from the photo metadata. List photos with no capture time separately as undated. Change nothing. If there are no photos, return an empty list and say so plainly."
     },
     {
-      "t": 31700,
+      "t": 16925,
       "kind": "action",
       "delegate": "d2",
       "agent": "photo-agent",
       "cli": "ug-photo",
       "action": "search-picture",
       "args": {
-        "file_type": "image",
-        "end_time": "2026-11-06",
         "start_time": "2026-10-16",
-        "scene": "home interior"
+        "end_time": "2026-11-06",
+        "scene": "home interior",
+        "file_type": "image"
       },
       "result": {
         "ok": true,
@@ -164,12 +163,12 @@
       "write": false
     },
     {
-      "t": 35118,
+      "t": 18115,
       "kind": "delegate_result",
       "id": "d2",
       "target": "photo-agent",
       "status": "completed",
-      "message": "I found 6 photos, but scene recognition was not available to filter for home interiors, so 0 photos were left out.",
+      "message": "Found 6 photos in the specified date range; scene recognition was not available, so no photos were filtered out.",
       "result": {
         "photos": [
           {
@@ -203,47 +202,48 @@
             "capture_time": "2026-10-30 14:33:05"
           }
         ],
-        "undated": []
+        "undated_photos": [],
+        "photos_left_out": 0
       }
     },
     {
-      "t": 35118,
+      "t": 18115,
       "kind": "delegate",
       "id": "d3",
       "target": "document-agent",
       "instruction": "Find documents the person can access whose content is a letter about the return of a tenancy deposit or proposed deposit deductions, and list each candidate with its file path, date and sender. Change nothing. If none is found, return an empty result and say so."
     },
     {
-      "t": 36786,
+      "t": 21072,
       "kind": "action",
       "delegate": "d3",
       "agent": "document-agent",
       "cli": "ug-document",
       "action": "qa",
       "args": {
-        "query": "Find documents about the return of a tenancy deposit or proposed deposit deductions. Include file path, date, and sender for each.",
-        "intent": "semantic_lookup"
+        "intent": "semantic_lookup",
+        "query": "Find documents about the return of a tenancy deposit or proposed deposit deductions. Include file path, date, and sender for each."
       },
       "result": {
         "ok": true,
         "data": {
-          "answer": "Based on the provided files, here is the document regarding the return of a tenancy deposit:\n\n*   **File path:** `Documents/Tenancy/deduction-letter.pdf`\n*   **Date:** 4 November 2026\n*   **Sender:** Elmfield Lettings, Deposits Team",
+          "answer": "The following document matches your request:\n\n*   **File path:** `Documents/Tenancy/deduction-letter.pdf`\n*   **Date:** 4 November 2026\n*   **Sender:** Elmfield Lettings, Deposits Team",
           "evidence": [
             "CREDITS.md",
             "Documents/Tenancy/deduction-letter.pdf"
           ]
         }
       },
-      "ms": 1469,
+      "ms": 3681,
       "write": false
     },
     {
-      "t": 38500,
+      "t": 28448,
       "kind": "delegate_result",
       "id": "d3",
       "target": "document-agent",
       "status": "completed",
-      "message": "Found one document regarding the return of a tenancy deposit.",
+      "message": "Found one document matching the criteria.",
       "result": [
         {
           "file_path": "Documents/Tenancy/deduction-letter.pdf",
@@ -253,104 +253,22 @@
       ]
     },
     {
-      "t": 40693,
+      "t": 36355,
       "kind": "delegate",
       "id": "d4",
       "target": "photo-agent",
-      "instruction": "For each photo returned by the search step (at most 40 per window, as selected above), run the vision model on that single image with this prompt: Which part of a rented home does this photo show? Answer on the first line with exactly one label for the main subject, from this list: kitchen-oven, kitchen-counter, kitchen-sink, fridge, bathroom-tub, bathroom-sink, toilet, living-room-wall, living-room-carpet, bedroom-wall, bedroom-carpet, window, front-door, not-a-spot, unclear. Use unclear when the photo is too dark or too blurry to tell. On the second line list any other labels from the same list that are also clearly visible, separated by commas, or write none. On the third line write one sentence about visible dirt, stains, marks or damage, or write none visible. Return the photo identifier, the path, the capture time from the search step, the main label, the other visible labels and the sentence for every photo. Do not guess a label for a photo you cannot read."
+      "instruction": "For each photo in the list below, run the vision model on that single image with this prompt: Which part of a rented home does this photo show? Answer on the first line with exactly one label for the main subject, from this list: kitchen-oven, kitchen-counter, kitchen-sink, fridge, bathroom-tub, bathroom-sink, toilet, living-room-wall, living-room-carpet, bedroom-wall, bedroom-carpet, window, front-door, not-a-spot, unclear. Use unclear when the photo is too dark or too blurry to tell. On the second line list any other labels from the same list that are also clearly visible, separated by commas, or write none. On the third line write one sentence about visible dirt, stains, marks or damage, or write none visible. Return the photo identifier, the path, the capture time from the search step, the main label, the other visible labels and the sentence for every photo. Do not search the library again in this step, and do not guess a label for a photo you cannot read.\n\nList of photos:\nph_a74f09fd95, Photos/2024/03/IMG_20240312_100412.jpg, 2024-03-12 10:04:12\nph_0fd5181613, Photos/2024/03/IMG_20240312_101140.jpg, 2024-03-12 10:11:40\nph_d86421c923, Photos/2024/03/IMG_20240312_101725.jpg, 2024-03-12 10:17:25\nph_a51f473f9b, Photos/2024/03/IMG_20240312_102408.jpg, 2024-03-12 10:24:08\nph_8dba06d247, Photos/2026/10/IMG_20261030_140631.jpg, 2026-10-30 14:06:31\nph_e89ab0c301, Photos/2026/10/IMG_20261030_141152.jpg, 2026-10-30 14:11:52\nph_f0da66653f, Photos/2026/10/IMG_20261030_141607.jpg, 2026-10-30 14:16:07\nph_5e35ee9a35, Photos/2026/10/IMG_20261030_142144.jpg, 2026-10-30 14:21:44\nph_d840e6f495, Photos/2026/10/IMG_20261030_142719.jpg, 2026-10-30 14:27:19\nph_ee70778dc5, Photos/2026/10/IMG_20261030_143305.jpg, 2026-10-30 14:33:05"
     },
     {
-      "t": 43489,
-      "kind": "action",
-      "delegate": "d4",
-      "agent": "photo-agent",
-      "cli": "ug-photo",
-      "action": "search-picture",
-      "args": {
-        "file_type": "image"
-      },
-      "result": {
-        "ok": true,
-        "data": {
-          "total": 12,
-          "items": [
-            {
-              "id": "ph_a74f09fd95",
-              "path": "Photos/2024/03/IMG_20240312_100412.jpg",
-              "capture_time": "2024-03-12 10:04:12"
-            },
-            {
-              "id": "ph_0fd5181613",
-              "path": "Photos/2024/03/IMG_20240312_101140.jpg",
-              "capture_time": "2024-03-12 10:11:40"
-            },
-            {
-              "id": "ph_d86421c923",
-              "path": "Photos/2024/03/IMG_20240312_101725.jpg",
-              "capture_time": "2024-03-12 10:17:25"
-            },
-            {
-              "id": "ph_a51f473f9b",
-              "path": "Photos/2024/03/IMG_20240312_102408.jpg",
-              "capture_time": "2024-03-12 10:24:08"
-            },
-            {
-              "id": "ph_7e0fa8f5a0",
-              "path": "Photos/2025/07/IMG_20250719_162000.jpg",
-              "capture_time": "2025-07-19 16:20:00"
-            },
-            {
-              "id": "ph_bf40523f16",
-              "path": "Photos/2025/12/IMG_20251224_194500.jpg",
-              "capture_time": "2025-12-24 19:45:00"
-            },
-            {
-              "id": "ph_8dba06d247",
-              "path": "Photos/2026/10/IMG_20261030_140631.jpg",
-              "capture_time": "2026-10-30 14:06:31"
-            },
-            {
-              "id": "ph_e89ab0c301",
-              "path": "Photos/2026/10/IMG_20261030_141152.jpg",
-              "capture_time": "2026-10-30 14:11:52"
-            },
-            {
-              "id": "ph_f0da66653f",
-              "path": "Photos/2026/10/IMG_20261030_141607.jpg",
-              "capture_time": "2026-10-30 14:16:07"
-            },
-            {
-              "id": "ph_5e35ee9a35",
-              "path": "Photos/2026/10/IMG_20261030_142144.jpg",
-              "capture_time": "2026-10-30 14:21:44"
-            },
-            {
-              "id": "ph_d840e6f495",
-              "path": "Photos/2026/10/IMG_20261030_142719.jpg",
-              "capture_time": "2026-10-30 14:27:19"
-            },
-            {
-              "id": "ph_ee70778dc5",
-              "path": "Photos/2026/10/IMG_20261030_143305.jpg",
-              "capture_time": "2026-10-30 14:33:05"
-            }
-          ],
-          "photos_without_capture_time": 0
-        }
-      },
-      "ms": 0,
-      "write": false
-    },
-    {
-      "t": 49939,
+      "t": 44256,
       "kind": "action",
       "delegate": "d4",
       "agent": "photo-agent",
       "cli": "ug-photo",
       "action": "vision-vlm",
       "args": {
-        "path": "Photos/2024/03/IMG_20240312_100412.jpg",
-        "prompt": "Which part of a rented home does this photo show? Answer on the first line with exactly one label for the main subject, from this list: kitchen-oven, kitchen-counter, kitchen-sink, fridge, bathroom-tub, bathroom-sink, toilet, living-room-wall, living-room-carpet, bedroom-wall, bedroom-carpet, window, front-door, not-a-spot, unclear. Use unclear when the photo is too dark or too blurry to tell. On the second line list any other labels from the same list that are also clearly visible, separated by commas, or write none. On the third line write one sentence about visible dirt, stains, marks or damage, or write none visible."
+        "prompt": "Which part of a rented home does this photo show? Answer on the first line with exactly one label for the main subject, from this list: kitchen-oven, kitchen-counter, kitchen-sink, fridge, bathroom-tub, bathroom-sink, toilet, living-room-wall, living-room-carpet, bedroom-wall, bedroom-carpet, window, front-door, not-a-spot, unclear. Use unclear when the photo is too dark or too blurry to tell. On the second line list any other labels from the same list that are also clearly visible, separated by commas, or write none. On the third line write one sentence about visible dirt, stains, marks or damage, or write none visible.",
+        "path": "Photos/2024/03/IMG_20240312_100412.jpg"
       },
       "result": {
         "ok": true,
@@ -359,11 +277,11 @@
           "answer": "kitchen-oven\nkitchen-counter, kitchen-sink\nNone visible."
         }
       },
-      "ms": 2120,
+      "ms": 3586,
       "write": false
     },
     {
-      "t": 52059,
+      "t": 47842,
       "kind": "action",
       "delegate": "d4",
       "agent": "photo-agent",
@@ -377,35 +295,35 @@
         "ok": true,
         "data": {
           "path": "Photos/2024/03/IMG_20240312_101140.jpg",
-          "answer": "living-room-carpet\nnone\nThere is a large, blurry, brown stain on the carpet."
+          "answer": "living-room-carpet\nnone\nThere is a large, blurry, brown stain on the carpet in the center of the room."
         }
       },
-      "ms": 2291,
+      "ms": 711,
       "write": false
     },
     {
-      "t": 54350,
+      "t": 48554,
       "kind": "action",
       "delegate": "d4",
       "agent": "photo-agent",
       "cli": "ug-photo",
       "action": "vision-vlm",
       "args": {
-        "prompt": "Which part of a rented home does this photo show? Answer on the first line with exactly one label for the main subject, from this list: kitchen-oven, kitchen-counter, kitchen-sink, fridge, bathroom-tub, bathroom-sink, toilet, living-room-wall, living-room-carpet, bedroom-wall, bedroom-carpet, window, front-door, not-a-spot, unclear. Use unclear when the photo is too dark or too blurry to tell. On the second line list any other labels from the same list that are also clearly visible, separated by commas, or write none. On the third line write one sentence about visible dirt, stains, marks or damage, or write none visible.",
-        "path": "Photos/2024/03/IMG_20240312_101725.jpg"
+        "path": "Photos/2024/03/IMG_20240312_101725.jpg",
+        "prompt": "Which part of a rented home does this photo show? Answer on the first line with exactly one label for the main subject, from this list: kitchen-oven, kitchen-counter, kitchen-sink, fridge, bathroom-tub, bathroom-sink, toilet, living-room-wall, living-room-carpet, bedroom-wall, bedroom-carpet, window, front-door, not-a-spot, unclear. Use unclear when the photo is too dark or too blurry to tell. On the second line list any other labels from the same list that are also clearly visible, separated by commas, or write none. On the third line write one sentence about visible dirt, stains, marks or damage, or write none visible."
       },
       "result": {
         "ok": true,
         "data": {
           "path": "Photos/2024/03/IMG_20240312_101725.jpg",
-          "answer": "living-room-wall\nnone\nNone visible."
+          "answer": "living-room-wall\nnone\nThere is a small, dark mark or blemish on the wall just above the center of the picture frame."
         }
       },
-      "ms": 2177,
+      "ms": 1929,
       "write": false
     },
     {
-      "t": 56527,
+      "t": 50483,
       "kind": "action",
       "delegate": "d4",
       "agent": "photo-agent",
@@ -422,11 +340,11 @@
           "answer": "bedroom-wall\nwindow\nnone visible"
         }
       },
-      "ms": 2117,
+      "ms": 2203,
       "write": false
     },
     {
-      "t": 58644,
+      "t": 52686,
       "kind": "action",
       "delegate": "d4",
       "agent": "photo-agent",
@@ -434,49 +352,7 @@
       "action": "vision-vlm",
       "args": {
         "prompt": "Which part of a rented home does this photo show? Answer on the first line with exactly one label for the main subject, from this list: kitchen-oven, kitchen-counter, kitchen-sink, fridge, bathroom-tub, bathroom-sink, toilet, living-room-wall, living-room-carpet, bedroom-wall, bedroom-carpet, window, front-door, not-a-spot, unclear. Use unclear when the photo is too dark or too blurry to tell. On the second line list any other labels from the same list that are also clearly visible, separated by commas, or write none. On the third line write one sentence about visible dirt, stains, marks or damage, or write none visible.",
-        "path": "Photos/2025/07/IMG_20250719_162000.jpg"
-      },
-      "result": {
-        "ok": true,
-        "data": {
-          "path": "Photos/2025/07/IMG_20250719_162000.jpg",
-          "answer": "not-a-spot\nnone\nnone visible"
-        }
-      },
-      "ms": 10976,
-      "write": false
-    },
-    {
-      "t": 69620,
-      "kind": "action",
-      "delegate": "d4",
-      "agent": "photo-agent",
-      "cli": "ug-photo",
-      "action": "vision-vlm",
-      "args": {
-        "path": "Photos/2025/12/IMG_20251224_194500.jpg",
-        "prompt": "Which part of a rented home does this photo show? Answer on the first line with exactly one label for the main subject, from this list: kitchen-oven, kitchen-counter, kitchen-sink, fridge, bathroom-tub, bathroom-sink, toilet, living-room-wall, living-room-carpet, bedroom-wall, bedroom-carpet, window, front-door, not-a-spot, unclear. Use unclear when the photo is too dark or too blurry to tell. On the second line list any other labels from the same list that are also clearly visible, separated by commas, or write none. On the third line write one sentence about visible dirt, stains, marks or damage, or write none visible."
-      },
-      "result": {
-        "ok": true,
-        "data": {
-          "path": "Photos/2025/12/IMG_20251224_194500.jpg",
-          "answer": "not-a-spot\nnone\nnone visible"
-        }
-      },
-      "ms": 1683,
-      "write": false
-    },
-    {
-      "t": 71303,
-      "kind": "action",
-      "delegate": "d4",
-      "agent": "photo-agent",
-      "cli": "ug-photo",
-      "action": "vision-vlm",
-      "args": {
-        "path": "Photos/2026/10/IMG_20261030_140631.jpg",
-        "prompt": "Which part of a rented home does this photo show? Answer on the first line with exactly one label for the main subject, from this list: kitchen-oven, kitchen-counter, kitchen-sink, fridge, bathroom-tub, bathroom-sink, toilet, living-room-wall, living-room-carpet, bedroom-wall, bedroom-carpet, window, front-door, not-a-spot, unclear. Use unclear when the photo is too dark or too blurry to tell. On the second line list any other labels from the same list that are also clearly visible, separated by commas, or write none. On the third line write one sentence about visible dirt, stains, marks or damage, or write none visible."
+        "path": "Photos/2026/10/IMG_20261030_140631.jpg"
       },
       "result": {
         "ok": true,
@@ -485,19 +361,19 @@
           "answer": "kitchen-oven\nkitchen-counter, kitchen-sink\nNone visible."
         }
       },
-      "ms": 1787,
+      "ms": 1798,
       "write": false
     },
     {
-      "t": 73090,
+      "t": 54484,
       "kind": "action",
       "delegate": "d4",
       "agent": "photo-agent",
       "cli": "ug-photo",
       "action": "vision-vlm",
       "args": {
-        "prompt": "Which part of a rented home does this photo show? Answer on the first line with exactly one label for the main subject, from this list: kitchen-oven, kitchen-counter, kitchen-sink, fridge, bathroom-tub, bathroom-sink, toilet, living-room-wall, living-room-carpet, bedroom-wall, bedroom-carpet, window, front-door, not-a-spot, unclear. Use unclear when the photo is too dark or too blurry to tell. On the second line list any other labels from the same list that are also clearly visible, separated by commas, or write none. On the third line write one sentence about visible dirt, stains, marks or damage, or write none visible.",
-        "path": "Photos/2026/10/IMG_20261030_141152.jpg"
+        "path": "Photos/2026/10/IMG_20261030_141152.jpg",
+        "prompt": "Which part of a rented home does this photo show? Answer on the first line with exactly one label for the main subject, from this list: kitchen-oven, kitchen-counter, kitchen-sink, fridge, bathroom-tub, bathroom-sink, toilet, living-room-wall, living-room-carpet, bedroom-wall, bedroom-carpet, window, front-door, not-a-spot, unclear. Use unclear when the photo is too dark or too blurry to tell. On the second line list any other labels from the same list that are also clearly visible, separated by commas, or write none. On the third line write one sentence about visible dirt, stains, marks or damage, or write none visible."
       },
       "result": {
         "ok": true,
@@ -506,11 +382,11 @@
           "answer": "living-room-carpet\nnone\nThere is a large, blurry, brown stain on the carpet."
         }
       },
-      "ms": 1747,
+      "ms": 1972,
       "write": false
     },
     {
-      "t": 74837,
+      "t": 56456,
       "kind": "action",
       "delegate": "d4",
       "agent": "photo-agent",
@@ -524,14 +400,14 @@
         "ok": true,
         "data": {
           "path": "Photos/2026/10/IMG_20261030_141607.jpg",
-          "answer": "living-room-wall\nnone\nThere are four small, dark circular marks or holes on the wall to the left of the framed picture."
+          "answer": "living-room-wall\nnone\nThere are four small, dark, circular marks or holes on the wall to the left of the framed picture."
         }
       },
-      "ms": 1796,
+      "ms": 5232,
       "write": false
     },
     {
-      "t": 76633,
+      "t": 61688,
       "kind": "action",
       "delegate": "d4",
       "agent": "photo-agent",
@@ -545,22 +421,22 @@
         "ok": true,
         "data": {
           "path": "Photos/2026/10/IMG_20261030_142144.jpg",
-          "answer": "bathroom-tub\nnone\nnone visible"
+          "answer": "bathroom-tub\nwindow\nnone visible"
         }
       },
-      "ms": 1662,
+      "ms": 2244,
       "write": false
     },
     {
-      "t": 78295,
+      "t": 63932,
       "kind": "action",
       "delegate": "d4",
       "agent": "photo-agent",
       "cli": "ug-photo",
       "action": "vision-vlm",
       "args": {
-        "path": "Photos/2026/10/IMG_20261030_142719.jpg",
-        "prompt": "Which part of a rented home does this photo show? Answer on the first line with exactly one label for the main subject, from this list: kitchen-oven, kitchen-counter, kitchen-sink, fridge, bathroom-tub, bathroom-sink, toilet, living-room-wall, living-room-carpet, bedroom-wall, bedroom-carpet, window, front-door, not-a-spot, unclear. Use unclear when the photo is too dark or too blurry to tell. On the second line list any other labels from the same list that are also clearly visible, separated by commas, or write none. On the third line write one sentence about visible dirt, stains, marks or damage, or write none visible."
+        "prompt": "Which part of a rented home does this photo show? Answer on the first line with exactly one label for the main subject, from this list: kitchen-oven, kitchen-counter, kitchen-sink, fridge, bathroom-tub, bathroom-sink, toilet, living-room-wall, living-room-carpet, bedroom-wall, bedroom-carpet, window, front-door, not-a-spot, unclear. Use unclear when the photo is too dark or too blurry to tell. On the second line list any other labels from the same list that are also clearly visible, separated by commas, or write none. On the third line write one sentence about visible dirt, stains, marks or damage, or write none visible.",
+        "path": "Photos/2026/10/IMG_20261030_142719.jpg"
       },
       "result": {
         "ok": true,
@@ -569,11 +445,11 @@
           "answer": "bedroom-wall\nwindow\nnone visible"
         }
       },
-      "ms": 10843,
+      "ms": 2088,
       "write": false
     },
     {
-      "t": 89138,
+      "t": 66020,
       "kind": "action",
       "delegate": "d4",
       "agent": "photo-agent",
@@ -590,142 +466,126 @@
           "answer": "unclear\nnone\nnone visible"
         }
       },
-      "ms": 1927,
+      "ms": 6154,
       "write": false
     },
     {
-      "t": 96019,
+      "t": 77613,
       "kind": "delegate_result",
       "id": "d4",
       "target": "photo-agent",
       "status": "completed",
-      "message": "Processed 12 photos with vision analysis.",
+      "message": "I have processed all 10 photos and extracted the requested information.",
       "result": [
         {
-          "photo_id": "ph_a74f09fd95",
+          "photo_identifier": "ph_a74f09fd95",
           "path": "Photos/2024/03/IMG_20240312_100412.jpg",
           "capture_time": "2024-03-12 10:04:12",
           "main_label": "kitchen-oven",
           "other_labels": "kitchen-counter, kitchen-sink",
-          "observation": "None visible."
+          "damage_description": "None visible."
         },
         {
-          "photo_id": "ph_0fd5181613",
+          "photo_identifier": "ph_0fd5181613",
           "path": "Photos/2024/03/IMG_20240312_101140.jpg",
           "capture_time": "2024-03-12 10:11:40",
           "main_label": "living-room-carpet",
           "other_labels": "none",
-          "observation": "There is a large, blurry, brown stain on the carpet."
+          "damage_description": "There is a large, blurry, brown stain on the carpet in the center of the room."
         },
         {
-          "photo_id": "ph_d86421c923",
+          "photo_identifier": "ph_d86421c923",
           "path": "Photos/2024/03/IMG_20240312_101725.jpg",
           "capture_time": "2024-03-12 10:17:25",
           "main_label": "living-room-wall",
           "other_labels": "none",
-          "observation": "None visible."
+          "damage_description": "There is a small, dark mark or blemish on the wall just above the center of the picture frame."
         },
         {
-          "photo_id": "ph_a51f473f9b",
+          "photo_identifier": "ph_a51f473f9b",
           "path": "Photos/2024/03/IMG_20240312_102408.jpg",
           "capture_time": "2024-03-12 10:24:08",
           "main_label": "bedroom-wall",
           "other_labels": "window",
-          "observation": "none visible"
+          "damage_description": "none visible"
         },
         {
-          "photo_id": "ph_7e0fa8f5a0",
-          "path": "Photos/2025/07/IMG_20250719_162000.jpg",
-          "capture_time": "2025-07-19 16:20:00",
-          "main_label": "not-a-spot",
-          "other_labels": "none",
-          "observation": "none visible"
-        },
-        {
-          "photo_id": "ph_bf40523f16",
-          "path": "Photos/2025/12/IMG_20251224_194500.jpg",
-          "capture_time": "2025-12-24 19:45:00",
-          "main_label": "not-a-spot",
-          "other_labels": "none",
-          "observation": "none visible"
-        },
-        {
-          "photo_id": "ph_8dba06d247",
+          "photo_identifier": "ph_8dba06d247",
           "path": "Photos/2026/10/IMG_20261030_140631.jpg",
           "capture_time": "2026-10-30 14:06:31",
           "main_label": "kitchen-oven",
           "other_labels": "kitchen-counter, kitchen-sink",
-          "observation": "None visible."
+          "damage_description": "None visible."
         },
         {
-          "photo_id": "ph_e89ab0c301",
+          "photo_identifier": "ph_e89ab0c301",
           "path": "Photos/2026/10/IMG_20261030_141152.jpg",
           "capture_time": "2026-10-30 14:11:52",
           "main_label": "living-room-carpet",
           "other_labels": "none",
-          "observation": "There is a large, blurry, brown stain on the carpet."
+          "damage_description": "There is a large, blurry, brown stain on the carpet."
         },
         {
-          "photo_id": "ph_f0da66653f",
+          "photo_identifier": "ph_f0da66653f",
           "path": "Photos/2026/10/IMG_20261030_141607.jpg",
           "capture_time": "2026-10-30 14:16:07",
           "main_label": "living-room-wall",
           "other_labels": "none",
-          "observation": "There are four small, dark circular marks or holes on the wall to the left of the framed picture."
+          "damage_description": "There are four small, dark, circular marks or holes on the wall to the left of the framed picture."
         },
         {
-          "photo_id": "ph_5e35ee9a35",
+          "photo_identifier": "ph_5e35ee9a35",
           "path": "Photos/2026/10/IMG_20261030_142144.jpg",
           "capture_time": "2026-10-30 14:21:44",
           "main_label": "bathroom-tub",
-          "other_labels": "none",
-          "observation": "none visible"
+          "other_labels": "window",
+          "damage_description": "none visible"
         },
         {
-          "photo_id": "ph_d840e6f495",
+          "photo_identifier": "ph_d840e6f495",
           "path": "Photos/2026/10/IMG_20261030_142719.jpg",
           "capture_time": "2026-10-30 14:27:19",
           "main_label": "bedroom-wall",
           "other_labels": "window",
-          "observation": "none visible"
+          "damage_description": "none visible"
         },
         {
-          "photo_id": "ph_ee70778dc5",
+          "photo_identifier": "ph_ee70778dc5",
           "path": "Photos/2026/10/IMG_20261030_143305.jpg",
           "capture_time": "2026-10-30 14:33:05",
           "main_label": "unclear",
           "other_labels": "none",
-          "observation": "none visible"
+          "damage_description": "none visible"
         }
       ]
     },
     {
-      "t": 96019,
+      "t": 77613,
       "kind": "assistant",
-      "text": "I have found your photos and a deduction letter from \"Elmfield Lettings, Deposits Team\" dated 4 November 2026. Is this the correct letter?"
+      "text": "I have searched for photos in your move-in window (27 Feb 2024 – 11 Apr 2024) and move-out window (16 Oct 2026 – 6 Nov 2026).\n\nI also found this deduction letter: `Documents/Tenancy/deduction-letter.pdf` (from Elmfield Lettings, dated 4 Nov 2026).\n\nIs this the correct letter to use?"
     },
     {
-      "t": 96019,
+      "t": 77613,
       "kind": "user",
       "text": "Yes, that is the letter."
     },
     {
-      "t": 97480,
+      "t": 86591,
       "kind": "delegate",
       "id": "d5",
       "target": "document-agent",
-      "instruction": "From the deposit deduction letter the person confirmed (Documents/Tenancy/deduction-letter.pdf), extract every proposed deduction using the contract schema with full content scope. For each line return the description exactly as written, the amount with its currency, and any room or item it names. Also return the deposit amount, the total of deductions, the letter date and any deadline for the tenant to respond. If no deduction line can be read, return an empty result and say so."
+      "instruction": "From the deposit deduction letter Documents/Tenancy/deduction-letter.pdf, extract every proposed deduction using the contract schema with full content scope. For each line return the description exactly as written, the amount with its currency, and any room or item it names. Also return the deposit amount, the total of deductions, the letter date and any deadline for the tenant to respond. If no deduction line can be read, return an empty result and say so."
     },
     {
-      "t": 98832,
+      "t": 88680,
       "kind": "action",
       "delegate": "d5",
       "agent": "document-agent",
       "cli": "ug-document",
       "action": "extract",
       "args": {
-        "query": "Extract proposed deductions (description, amount, currency, room/item), deposit amount, total deductions, letter date, and response deadline.",
         "schema": "contract",
+        "query": "Extract proposed deductions (description, amount, currency, room/item), deposit amount, total deductions, letter date, and response deadline.",
         "content_scope": "full",
         "file": [
           "Documents/Tenancy/deduction-letter.pdf"
@@ -773,21 +633,17 @@
           "failures": []
         }
       },
-      "ms": 529,
+      "ms": 19302,
       "write": false
     },
     {
-      "t": 154504,
+      "t": 109677,
       "kind": "delegate_result",
       "id": "d5",
       "target": "document-agent",
       "status": "completed",
       "message": "The deduction details have been successfully extracted from the letter.",
       "result": {
-        "deposit_amount": "£1,200.00",
-        "total_deductions": "£420.00",
-        "letter_date": "4 November 2026",
-        "response_deadline": "18 November 2026",
         "deductions": [
           {
             "description": "Oven deep clean",
@@ -809,57 +665,61 @@
             "amount": "£30.00",
             "room_or_item": "Bathroom"
           }
-        ]
+        ],
+        "deposit_amount": "£1,200.00",
+        "total_deductions": "£420.00",
+        "letter_date": "4 November 2026",
+        "response_deadline": "18 November 2026"
       }
     },
     {
-      "t": 159548,
+      "t": 113487,
       "kind": "approval_request",
-      "text": "I have matched your charges to your photos. Here is the plan:\n\n**Charges:**\n- Oven deep clean (£180.00):\n  - Move-in: 12 Mar 2024 10:04 (None visible)\n  - Move-out: 30 Oct 2026 14:06 (None visible)\n- Carpet stain treatment, living room (£120.00):\n  - Move-in: 12 Mar 2024 10:11 (Large, blurry, brown stain)\n  - Move-out: 30 Oct 2026 14:11 (Large, blurry, brown stain)\n- Wall repair and repaint, living room (£90.00):\n  - Move-in: 12 Mar 2024 10:17 (None visible)\n  - Move-out: 30 Oct 2026 14:16 (Four small, dark circular marks or holes)\n- Bathroom deep clean (£30.00):\n  - Move-in: No dated move-in photo\n  - Move-out: 30 Oct 2026 14:21 (None visible)\n\nI will create an album \"Move-out Proof deposit evidence\", a folder \"Deposit_Evidence\" next to your letter, and a report \"move-out-proof-report\". Would you like me to also copy the paired photos into the \"Deposit_Evidence\" folder? (The NAS may ask you to confirm each write.)",
+      "text": "I have matched your charges to the photos found. Here is the summary:\n\n**Windows searched:**\n- Move-in: 27 Feb 2024 – 11 Apr 2024\n- Move-out: 16 Oct 2026 – 6 Nov 2026\n\n**Charges and Evidence:**\n\n| Charge | Amount | Spot | Move-in photo | Move-out photo |\n|---|---|---|---|---|\n| Oven deep clean | £180.00 | kitchen-oven | 12 Mar 2024, None visible | 30 Oct 2026, None visible |\n| Carpet stain treatment, living room | £120.00 | living-room-carpet | 12 Mar 2024, Stain visible | 30 Oct 2026, Stain visible |\n| Wall repair and repaint, living room | £90.00 | living-room-wall | 12 Mar 2024, Mark visible | 30 Oct 2026, Marks visible |\n| Bathroom deep clean | £30.00 | bathroom-tub | No dated move-in photo | 30 Oct 2026, None visible |\n\n**Plan:**\n- Create an album: `Move-out Proof deposit evidence`\n- Create a folder: `Deposit_Evidence` (next to your letter)\n- Create a report: `move-out-proof-report` (inside the folder)\n\nWould you like me to also copy the paired photos into the `Deposit_Evidence` folder? (This is useful for attaching to an email.)\n\nPlease approve to proceed.",
       "rows": [
         {
-          "move_in_note": "None visible.",
-          "move_out_note": "None visible.",
-          "charge": "Oven deep clean",
-          "move_out_path": "Photos/2026/10/IMG_20261030_140631.jpg",
-          "spot": "kitchen-oven",
-          "move_in_time": "12 Mar 2024 10:04",
           "move_in_path": "Photos/2024/03/IMG_20240312_100412.jpg",
-          "move_out_time": "30 Oct 2026 14:06",
-          "amount": "£180.00"
+          "move_in_note": "None visible",
+          "amount": "£180.00",
+          "charge": "Oven deep clean",
+          "move_out_note": "None visible",
+          "move_out_time": "2026-10-30 14:06:31",
+          "move_out_path": "Photos/2026/10/IMG_20261030_140631.jpg",
+          "move_in_time": "2024-03-12 10:04:12",
+          "spot": "kitchen-oven"
         },
         {
-          "charge": "Carpet stain treatment, living room",
-          "move_out_time": "30 Oct 2026 14:11",
-          "move_in_path": "Photos/2024/03/IMG_20240312_101140.jpg",
-          "move_in_time": "12 Mar 2024 10:11",
-          "move_in_note": "Large, blurry, brown stain.",
           "move_out_path": "Photos/2026/10/IMG_20261030_141152.jpg",
           "spot": "living-room-carpet",
+          "move_out_time": "2026-10-30 14:11:52",
+          "move_in_path": "Photos/2024/03/IMG_20240312_101140.jpg",
+          "move_out_note": "Stain visible",
+          "move_in_note": "Stain visible",
+          "move_in_time": "2024-03-12 10:11:40",
           "amount": "£120.00",
-          "move_out_note": "Large, blurry, brown stain."
+          "charge": "Carpet stain treatment, living room"
         },
         {
-          "amount": "£90.00",
-          "move_in_note": "None visible.",
-          "spot": "living-room-wall",
-          "move_out_time": "30 Oct 2026 14:16",
+          "move_in_time": "2024-03-12 10:17:25",
           "move_out_path": "Photos/2026/10/IMG_20261030_141607.jpg",
-          "move_out_note": "Four small, dark circular marks or holes.",
-          "move_in_time": "12 Mar 2024 10:17",
-          "charge": "Wall repair and repaint, living room (nail holes and scuff)",
-          "move_in_path": "Photos/2024/03/IMG_20240312_101725.jpg"
+          "move_out_time": "2026-10-30 14:16:07",
+          "move_out_note": "Marks visible",
+          "spot": "living-room-wall",
+          "charge": "Wall repair and repaint, living room",
+          "amount": "£90.00",
+          "move_in_path": "Photos/2024/03/IMG_20240312_101725.jpg",
+          "move_in_note": "Mark visible"
         },
         {
-          "move_in_time": "",
+          "move_in_note": "No dated move-in photo",
           "move_in_path": "",
           "amount": "£30.00",
-          "spot": "bathroom-tub",
-          "move_out_note": "None visible.",
+          "charge": "Bathroom deep clean",
           "move_out_path": "Photos/2026/10/IMG_20261030_142144.jpg",
-          "move_out_time": "30 Oct 2026 14:21",
-          "move_in_note": "No dated move-in photo of this spot",
-          "charge": "Bathroom deep clean"
+          "move_out_note": "None visible",
+          "move_out_time": "2026-10-30 14:21:44",
+          "move_in_time": "",
+          "spot": "bathroom-tub"
         }
       ],
       "photos": [
@@ -873,19 +733,19 @@
       ]
     },
     {
-      "t": 159548,
+      "t": 113487,
       "kind": "user",
       "text": "Yes, create them, and copy the photos into the folder too."
     },
     {
-      "t": 162306,
+      "t": 119345,
       "kind": "delegate",
       "id": "d6",
       "target": "photo-agent",
-      "instruction": "Create an album named Move-out Proof deposit evidence containing exactly the photos the person approved, identified by the photo identifiers (or, where none was given, the file paths) returned by the search step, in pair order, each move-in photo followed by its move-out photo, then every approved photo that has no pair. The ordered list of photo identifiers is at the end of this instruction: add them in that order, and do not run the vision model or any search in this step. Create nothing else. Return the album identifier and the number of photos added.\n\nph_a74f09fd95\nph_8dba06d247\nph_0fd5181613\nph_e89ab0c301\nph_d86421c923\nph_f0da66653f\nph_5e35ee9a35"
+      "instruction": "Create an album named Move-out Proof deposit evidence containing exactly the photos the person approved, identified by the photo identifiers returned by the search step, in pair order, each move-in photo followed by its move-out photo, then every approved photo that has no pair. The ordered list of photo identifiers is:\nph_a74f09fd95\nph_8dba06d247\nph_0fd5181613\nph_e89ab0c301\nph_d86421c923\nph_f0da66653f\nph_5e35ee9a35"
     },
     {
-      "t": 163824,
+      "t": 120979,
       "kind": "action",
       "delegate": "d6",
       "agent": "photo-agent",
@@ -919,72 +779,60 @@
           ]
         }
       },
-      "ms": 1,
+      "ms": 2,
       "write": true
     },
     {
-      "t": 163824,
+      "t": 120980,
       "kind": "delegate_state",
       "delegate": "d6",
       "status": "waiting_approval",
       "write": "ug-photo create-album"
     },
     {
-      "t": 163824,
+      "t": 120980,
       "kind": "approval_response",
       "delegate": "d6",
       "approved": true,
       "write": "ug-photo create-album"
     },
     {
-      "t": 165201,
+      "t": 122918,
       "kind": "delegate_result",
       "id": "d6",
       "target": "photo-agent",
       "status": "completed",
-      "message": "The album 'Move-out Proof deposit evidence' has been created with 7 photos.",
+      "message": "The album 'Move-out Proof deposit evidence' has been successfully created with the specified photos.",
       "result": {
-        "album_id": "album-1",
-        "count": 7
+        "album_name": "Move-out Proof deposit evidence",
+        "album_uuid": "album-1",
+        "items": [
+          "Photos/2024/03/IMG_20240312_100412.jpg",
+          "Photos/2026/10/IMG_20261030_140631.jpg",
+          "Photos/2024/03/IMG_20240312_101140.jpg",
+          "Photos/2026/10/IMG_20261030_141152.jpg",
+          "Photos/2024/03/IMG_20240312_101725.jpg",
+          "Photos/2026/10/IMG_20261030_141607.jpg",
+          "Photos/2026/10/IMG_20261030_142144.jpg"
+        ]
       }
     },
     {
-      "t": 165201,
+      "t": 122918,
       "kind": "delegate",
       "id": "d7",
       "target": "file-agent",
-      "instruction": "Create a folder named Deposit_Evidence inside the folder that holds the deposit deduction letter the person confirmed (Documents/Tenancy). Create only this folder: do not move, copy or change any file in this step. Return the folder path."
+      "instruction": "Create a folder named Deposit_Evidence inside the folder Documents/Tenancy. Create only this folder: do not move, copy or change any file in this step. Return the folder path."
     },
     {
-      "t": 172432,
-      "kind": "action",
-      "delegate": "d7",
-      "agent": "file-agent",
-      "cli": "ug-filesystem",
-      "action": "ls",
-      "args": {
-        "path": "Documents/Tenancy"
-      },
-      "result": {
-        "ok": true,
-        "data": {
-          "path": "Documents/Tenancy",
-          "entries": [
-            "deduction-letter.pdf"
-          ]
-        }
-      },
-      "ms": 0,
-      "write": false
-    },
-    {
-      "t": 178987,
+      "t": 124142,
       "kind": "action",
       "delegate": "d7",
       "agent": "file-agent",
       "cli": "ug-filesystem",
       "action": "mkdir",
       "args": {
+        "parents": true,
         "path": "Documents/Tenancy/Deposit_Evidence"
       },
       "result": {
@@ -997,46 +845,46 @@
       "write": true
     },
     {
-      "t": 178987,
+      "t": 124142,
       "kind": "delegate_state",
       "delegate": "d7",
       "status": "waiting_approval",
       "write": "ug-filesystem mkdir"
     },
     {
-      "t": 178987,
+      "t": 124142,
       "kind": "approval_response",
       "delegate": "d7",
       "approved": true,
       "write": "ug-filesystem mkdir"
     },
     {
-      "t": 185663,
+      "t": 125409,
       "kind": "delegate_result",
       "id": "d7",
       "target": "file-agent",
       "status": "completed",
-      "message": "The folder Deposit_Evidence has been created inside Documents/Tenancy.",
+      "message": "The folder Deposit_Evidence was successfully created inside Documents/Tenancy.",
       "result": "Documents/Tenancy/Deposit_Evidence"
     },
     {
-      "t": 185663,
+      "t": 137107,
       "kind": "delegate",
       "id": "d8",
       "target": "file-agent",
-      "instruction": "Copy each photo the person approved, and only those photos (not the letter and no other file), into the Deposit_Evidence folder (Documents/Tenancy/Deposit_Evidence), in copy mode, leaving every original file in place and never overwriting an existing file. Return the list of copied files and any that could not be copied.\n\nPhotos/2024/03/IMG_20240312_100412.jpg\nPhotos/2026/10/IMG_20261030_140631.jpg\nPhotos/2024/03/IMG_20240312_101140.jpg\nPhotos/2026/10/IMG_20261030_141152.jpg\nPhotos/2024/03/IMG_20240312_101725.jpg\nPhotos/2026/10/IMG_20261030_141607.jpg\nPhotos/2026/10/IMG_20261030_142144.jpg"
+      "instruction": "Copy each photo the person approved, and only those photos (not the letter and no other file), into the Deposit_Evidence folder Documents/Tenancy/Deposit_Evidence, in copy mode, leaving every original file in place and never overwriting an existing file. Return the list of copied files and any that could not be copied.\n\nFiles to copy:\nPhotos/2024/03/IMG_20240312_100412.jpg\nPhotos/2026/10/IMG_20261030_140631.jpg\nPhotos/2024/03/IMG_20240312_101140.jpg\nPhotos/2026/10/IMG_20261030_141152.jpg\nPhotos/2024/03/IMG_20240312_101725.jpg\nPhotos/2026/10/IMG_20261030_141607.jpg\nPhotos/2026/10/IMG_20261030_142144.jpg"
     },
     {
-      "t": 191964,
+      "t": 140029,
       "kind": "action",
       "delegate": "d8",
       "agent": "file-agent",
       "cli": "ug-filesystem",
       "action": "cpmv",
       "args": {
+        "src": "Photos/2024/03/IMG_20240312_100412.jpg",
         "dst": "Documents/Tenancy/Deposit_Evidence",
-        "type": "copy",
-        "src": "Photos/2024/03/IMG_20240312_100412.jpg"
+        "type": "copy"
       },
       "result": {
         "ok": true,
@@ -1045,34 +893,34 @@
           "dst": "Documents/Tenancy/Deposit_Evidence/IMG_20240312_100412.jpg"
         }
       },
-      "ms": 1,
+      "ms": 2,
       "write": true
     },
     {
-      "t": 191964,
+      "t": 140029,
       "kind": "delegate_state",
       "delegate": "d8",
       "status": "waiting_approval",
       "write": "ug-filesystem cpmv"
     },
     {
-      "t": 191964,
+      "t": 140029,
       "kind": "approval_response",
       "delegate": "d8",
       "approved": true,
       "write": "ug-filesystem cpmv"
     },
     {
-      "t": 191966,
+      "t": 140031,
       "kind": "action",
       "delegate": "d8",
       "agent": "file-agent",
       "cli": "ug-filesystem",
       "action": "cpmv",
       "args": {
+        "dst": "Documents/Tenancy/Deposit_Evidence",
         "src": "Photos/2026/10/IMG_20261030_140631.jpg",
-        "type": "copy",
-        "dst": "Documents/Tenancy/Deposit_Evidence"
+        "type": "copy"
       },
       "result": {
         "ok": true,
@@ -1085,21 +933,21 @@
       "write": true
     },
     {
-      "t": 191966,
+      "t": 140031,
       "kind": "delegate_state",
       "delegate": "d8",
       "status": "waiting_approval",
       "write": "ug-filesystem cpmv"
     },
     {
-      "t": 191966,
+      "t": 140031,
       "kind": "approval_response",
       "delegate": "d8",
       "approved": true,
       "write": "ug-filesystem cpmv"
     },
     {
-      "t": 191967,
+      "t": 140032,
       "kind": "action",
       "delegate": "d8",
       "agent": "file-agent",
@@ -1107,8 +955,8 @@
       "action": "cpmv",
       "args": {
         "dst": "Documents/Tenancy/Deposit_Evidence",
-        "src": "Photos/2024/03/IMG_20240312_101140.jpg",
-        "type": "copy"
+        "type": "copy",
+        "src": "Photos/2024/03/IMG_20240312_101140.jpg"
       },
       "result": {
         "ok": true,
@@ -1121,30 +969,30 @@
       "write": true
     },
     {
-      "t": 191967,
+      "t": 140032,
       "kind": "delegate_state",
       "delegate": "d8",
       "status": "waiting_approval",
       "write": "ug-filesystem cpmv"
     },
     {
-      "t": 191967,
+      "t": 140032,
       "kind": "approval_response",
       "delegate": "d8",
       "approved": true,
       "write": "ug-filesystem cpmv"
     },
     {
-      "t": 191967,
+      "t": 140032,
       "kind": "action",
       "delegate": "d8",
       "agent": "file-agent",
       "cli": "ug-filesystem",
       "action": "cpmv",
       "args": {
-        "dst": "Documents/Tenancy/Deposit_Evidence",
         "type": "copy",
-        "src": "Photos/2026/10/IMG_20261030_141152.jpg"
+        "src": "Photos/2026/10/IMG_20261030_141152.jpg",
+        "dst": "Documents/Tenancy/Deposit_Evidence"
       },
       "result": {
         "ok": true,
@@ -1157,30 +1005,30 @@
       "write": true
     },
     {
-      "t": 191967,
+      "t": 140032,
       "kind": "delegate_state",
       "delegate": "d8",
       "status": "waiting_approval",
       "write": "ug-filesystem cpmv"
     },
     {
-      "t": 191967,
+      "t": 140032,
       "kind": "approval_response",
       "delegate": "d8",
       "approved": true,
       "write": "ug-filesystem cpmv"
     },
     {
-      "t": 191968,
+      "t": 140033,
       "kind": "action",
       "delegate": "d8",
       "agent": "file-agent",
       "cli": "ug-filesystem",
       "action": "cpmv",
       "args": {
-        "src": "Photos/2024/03/IMG_20240312_101725.jpg",
         "type": "copy",
-        "dst": "Documents/Tenancy/Deposit_Evidence"
+        "dst": "Documents/Tenancy/Deposit_Evidence",
+        "src": "Photos/2024/03/IMG_20240312_101725.jpg"
       },
       "result": {
         "ok": true,
@@ -1189,34 +1037,34 @@
           "dst": "Documents/Tenancy/Deposit_Evidence/IMG_20240312_101725.jpg"
         }
       },
-      "ms": 2,
+      "ms": 1,
       "write": true
     },
     {
-      "t": 191968,
+      "t": 140033,
       "kind": "delegate_state",
       "delegate": "d8",
       "status": "waiting_approval",
       "write": "ug-filesystem cpmv"
     },
     {
-      "t": 191968,
+      "t": 140033,
       "kind": "approval_response",
       "delegate": "d8",
       "approved": true,
       "write": "ug-filesystem cpmv"
     },
     {
-      "t": 191970,
+      "t": 140034,
       "kind": "action",
       "delegate": "d8",
       "agent": "file-agent",
       "cli": "ug-filesystem",
       "action": "cpmv",
       "args": {
-        "dst": "Documents/Tenancy/Deposit_Evidence",
         "type": "copy",
-        "src": "Photos/2026/10/IMG_20261030_141607.jpg"
+        "src": "Photos/2026/10/IMG_20261030_141607.jpg",
+        "dst": "Documents/Tenancy/Deposit_Evidence"
       },
       "result": {
         "ok": true,
@@ -1225,34 +1073,34 @@
           "dst": "Documents/Tenancy/Deposit_Evidence/IMG_20261030_141607.jpg"
         }
       },
-      "ms": 1,
+      "ms": 0,
       "write": true
     },
     {
-      "t": 191970,
+      "t": 140034,
       "kind": "delegate_state",
       "delegate": "d8",
       "status": "waiting_approval",
       "write": "ug-filesystem cpmv"
     },
     {
-      "t": 191970,
+      "t": 140034,
       "kind": "approval_response",
       "delegate": "d8",
       "approved": true,
       "write": "ug-filesystem cpmv"
     },
     {
-      "t": 191971,
+      "t": 140034,
       "kind": "action",
       "delegate": "d8",
       "agent": "file-agent",
       "cli": "ug-filesystem",
       "action": "cpmv",
       "args": {
-        "type": "copy",
         "src": "Photos/2026/10/IMG_20261030_142144.jpg",
-        "dst": "Documents/Tenancy/Deposit_Evidence"
+        "dst": "Documents/Tenancy/Deposit_Evidence",
+        "type": "copy"
       },
       "result": {
         "ok": true,
@@ -1265,21 +1113,21 @@
       "write": true
     },
     {
-      "t": 191971,
+      "t": 140034,
       "kind": "delegate_state",
       "delegate": "d8",
       "status": "waiting_approval",
       "write": "ug-filesystem cpmv"
     },
     {
-      "t": 191971,
+      "t": 140034,
       "kind": "approval_response",
       "delegate": "d8",
       "approved": true,
       "write": "ug-filesystem cpmv"
     },
     {
-      "t": 193725,
+      "t": 140025,
       "kind": "delegate_result",
       "id": "d8",
       "target": "file-agent",
@@ -1299,21 +1147,21 @@
       }
     },
     {
-      "t": 193725,
+      "t": 140025,
       "kind": "delegate",
       "id": "d9",
       "target": "knowledge-agent",
-      "instruction": "Save the report the person approved as a Markdown file named move-out-proof-report inside the Deposit_Evidence folder (Documents/Tenancy/Deposit_Evidence); if that folder cannot be used, save it in the default location and return where it was saved. The report is the text between the line BEGIN REPORT and the line END REPORT at the end of this instruction: save exactly that text and nothing else. Return the saved file path and its size.\n\nBEGIN REPORT\n# Move-out Proof report\n\n## Header\n- Letter: 4 November 2026, from Elmfield Lettings, Deposits Team\n- Deposit: £1,200.00\n- Total of proposed deductions: £420.00\n- Response deadline: 18 November 2026\n- Windows searched: Move-in (27 Feb 2024 - 11 Apr 2024), Move-out (16 Oct 2026 - 6 Nov 2026)\n\n## Charge table\n\n| Charge (as written) | Amount | Spot | Move-in photo | Move-out photo |\n|---|---|---|---|---|\n| Oven deep clean | £180.00 | kitchen-oven | IMG_20240312_100412.jpg, 12 Mar 2024 10:04. Visible: None visible | IMG_20261030_140631.jpg, 30 Oct 2026 14:06. Visible: None visible |\n| Carpet stain treatment, living room | £120.00 | living-room-carpet | IMG_20240312_101140.jpg, 12 Mar 2024 10:11. Visible: Large, blurry, brown stain. | IMG_20261030_141152.jpg, 30 Oct 2026 14:11. Visible: Large, blurry, brown stain. |\n| Wall repair and repaint, living room (nail holes and scuff) | £90.00 | living-room-wall | IMG_20240312_101725.jpg, 12 Mar 2024 10:17. Visible: None visible | IMG_20261030_141607.jpg, 30 Oct 2026 14:16. Visible: Four small, dark circular marks or holes. |\n| Bathroom deep clean | £30.00 | bathroom-tub | No dated move-in photo of this spot | IMG_20261030_142144.jpg, 30 Oct 2026 14:21. Visible: None visible |\n\n## After the table\n\n1. **Gaps:** Bathroom deep clean (no dated move-in photo).\n2. **Unclear photos:** IMG_20261030_143305.jpg (30 Oct 2026 14:33).\n3. **Charges with no photo spot:** None.\n4. **Counts:** 12 photos searched, 12 labelled, 1 unclear, 0 left out.\n5. Photos and dates come from your own library and its photo metadata. This report does not say whether any charge is fair; you decide what to dispute.\nEND REPORT"
+      "instruction": "Save the report the person approved as a Markdown file named move-out-proof-report inside the Deposit_Evidence folder Documents/Tenancy/Deposit_Evidence; if that folder cannot be used, save it in the default location and return where it was saved. The report is the text between the line BEGIN REPORT and the line END REPORT at the end of this instruction: save exactly that text and nothing else. Return the saved file path and its size.\n\nBEGIN REPORT\n# Move-out Proof report\nLetter: 4 November 2026, Elmfield Lettings, Deposits Team\nDeposit: £1,200.00, Total deductions: £420.00, Response deadline: 18 November 2026\nWindows searched: 27 Feb 2024 – 11 Apr 2024 (move-in), 16 Oct 2026 – 6 Nov 2026 (move-out)\n\n| Charge (as written) | Amount | Spot | Move-in photo | Move-out photo |\n|---|---|---|---|---|\n| Oven deep clean | £180.00 | kitchen-oven | IMG_20240312_100412.jpg, 12 Mar 2024 10:04. Visible: None visible | IMG_20261030_140631.jpg, 30 Oct 2026 14:06. Visible: None visible |\n| Carpet stain treatment, living room | £120.00 | living-room-carpet | IMG_20240312_101140.jpg, 12 Mar 2024 10:11. Visible: Stain visible | IMG_20261030_141152.jpg, 30 Oct 2026 14:11. Visible: Stain visible |\n| Wall repair and repaint, living room | £90.00 | living-room-wall | IMG_20240312_101725.jpg, 12 Mar 2024 10:17. Visible: Mark visible | IMG_20261030_141607.jpg, 30 Oct 2026 14:16. Visible: Marks visible |\n| Bathroom deep clean | £30.00 | bathroom-tub | No dated move-in photo of this spot | IMG_20261030_142144.jpg, 30 Oct 2026 14:21. Visible: None visible |\n\n1. **Gaps:** Bathroom deep clean (no dated move-in photo).\n2. **Unclear photos:** IMG_20261030_143305.jpg (30 Oct 2026 14:33).\n3. **Charges with no photo spot:** None.\n4. **Counts:** 4 photos searched in move-in window, 6 in move-out window. 9 labelled, 1 unclear.\n5. Photos and dates come from your own library and its photo metadata. This report does not say whether any charge is fair; you decide what to dispute.\nEND REPORT"
     },
     {
-      "t": 203460,
+      "t": 142733,
       "kind": "action",
       "delegate": "d9",
       "agent": "knowledge-agent",
       "cli": "ug-knowledge",
       "action": "save-text",
       "args": {
-        "content": "# Move-out Proof report\n\n## Header\n- Letter: 4 November 2026, from Elmfield Lettings, Deposits Team\n- Deposit: £1,200.00\n- Total of proposed deductions: £420.00\n- Response deadline: 18 November 2026\n- Windows searched: Move-in (27 Feb 2024 - 11 Apr 2024), Move-out (16 Oct 2026 - 6 Nov 2026)\n\n## Charge table\n\n| Charge (as written) | Amount | Spot | Move-in photo | Move-out photo |\n|---|---|---|---|---|\n| Oven deep clean | £180.00 | kitchen-oven | IMG_20240312_100412.jpg, 12 Mar 2024 10:04. Visible: None visible | IMG_20261030_140631.jpg, 30 Oct 2026 14:06. Visible: None visible |\n| Carpet stain treatment, living room | £120.00 | living-room-carpet | IMG_20240312_101140.jpg, 12 Mar 2024 10:11. Visible: Large, blurry, brown stain. | IMG_20261030_141152.jpg, 30 Oct 2026 14:11. Visible: Large, blurry, brown stain. |\n| Wall repair and repaint, living room (nail holes and scuff) | £90.00 | living-room-wall | IMG_20240312_101725.jpg, 12 Mar 2024 10:17. Visible: None visible | IMG_20261030_141607.jpg, 30 Oct 2026 14:16. Visible: Four small, dark circular marks or holes. |\n| Bathroom deep clean | £30.00 | bathroom-tub | No dated move-in photo of this spot | IMG_20261030_142144.jpg, 30 Oct 2026 14:21. Visible: None visible |\n\n## After the table\n\n1. **Gaps:** Bathroom deep clean (no dated move-in photo).\n2. **Unclear photos:** IMG_20261030_143305.jpg (30 Oct 2026 14:33).\n3. **Charges with no photo spot:** None.\n4. **Counts:** 12 photos searched, 12 labelled, 1 unclear, 0 left out.\n5. Photos and dates come from your own library and its photo metadata. This report does not say whether any charge is fair; you decide what to dispute.",
+        "content": "# Move-out Proof report\nLetter: 4 November 2026, Elmfield Lettings, Deposits Team\nDeposit: £1,200.00, Total deductions: £420.00, Response deadline: 18 November 2026\nWindows searched: 27 Feb 2024 – 11 Apr 2024 (move-in), 16 Oct 2026 – 6 Nov 2026 (move-out)\n\n| Charge (as written) | Amount | Spot | Move-in photo | Move-out photo |\n|---|---|---|---|---|\n| Oven deep clean | £180.00 | kitchen-oven | IMG_20240312_100412.jpg, 12 Mar 2024 10:04. Visible: None visible | IMG_20261030_140631.jpg, 30 Oct 2026 14:06. Visible: None visible |\n| Carpet stain treatment, living room | £120.00 | living-room-carpet | IMG_20240312_101140.jpg, 12 Mar 2024 10:11. Visible: Stain visible | IMG_20261030_141152.jpg, 30 Oct 2026 14:11. Visible: Stain visible |\n| Wall repair and repaint, living room | £90.00 | living-room-wall | IMG_20240312_101725.jpg, 12 Mar 2024 10:17. Visible: Mark visible | IMG_20261030_141607.jpg, 30 Oct 2026 14:16. Visible: Marks visible |\n| Bathroom deep clean | £30.00 | bathroom-tub | No dated move-in photo of this spot | IMG_20261030_142144.jpg, 30 Oct 2026 14:21. Visible: None visible |\n\n1. **Gaps:** Bathroom deep clean (no dated move-in photo).\n2. **Unclear photos:** IMG_20261030_143305.jpg (30 Oct 2026 14:33).\n3. **Charges with no photo spot:** None.\n4. **Counts:** 4 photos searched in move-in window, 6 in move-out window. 9 labelled, 1 unclear.\n5. Photos and dates come from your own library and its photo metadata. This report does not say whether any charge is fair; you decide what to dispute.",
         "path": "Documents/Tenancy/Deposit_Evidence",
         "filename_hint": "move-out-proof-report.md"
       },
@@ -1322,43 +1170,42 @@
         "data": {
           "verified": true,
           "outputFile": "Documents/Tenancy/Deposit_Evidence/move-out-proof-report.md",
-          "contentBytes": 1651
+          "contentBytes": 1529
         }
       },
       "ms": 1,
       "write": true
     },
     {
-      "t": 203460,
+      "t": 142733,
       "kind": "delegate_state",
       "delegate": "d9",
       "status": "waiting_approval",
       "write": "ug-knowledge save-text"
     },
     {
-      "t": 203460,
+      "t": 142733,
       "kind": "approval_response",
       "delegate": "d9",
       "approved": true,
       "write": "ug-knowledge save-text"
     },
     {
-      "t": 205821,
+      "t": 145003,
       "kind": "delegate_result",
       "id": "d9",
       "target": "knowledge-agent",
       "status": "completed",
-      "message": "The report has been saved successfully.",
+      "message": "The report has been saved to Documents/Tenancy/Deposit_Evidence/move-out-proof-report.md.",
       "result": {
         "path": "Documents/Tenancy/Deposit_Evidence/move-out-proof-report.md",
-        "size": 1651
+        "size": 1529
       }
     },
     {
-      "t": 210425,
+      "t": 154172,
       "kind": "finish",
-      "text": "I have completed the evidence pack for your deposit deduction letter.\n\n**Summary of actions:**\n- **Windows searched:** Move-in (27 Feb 2024 - 11 Apr 2024) and Move-out (16 Oct 2026 - 6 Nov 2026).\n- **Photos:** 12 photos were searched and labelled, with 1 photo marked as unclear.\n- **Charges:** 4 charges were processed. 3 have both move-in and move-out photos, and 1 has only a move-out photo.\n- **Created:**\n  - An album named \"Move-out Proof deposit evidence\" containing the paired photos.\n  - A folder named `Deposit_Evidence` inside `Documents/Tenancy`.\n  - A report file `move-out-proof-report.md` saved in that folder.\n  - Copies of the paired photos have been placed in the `Deposit_Evidence` folder for your use.\n\nYou can now review the report and the album to decide how you wish to respond to the deduction letter. Please remember that this report does not determine the fairness of the charges; you decide what to dispute.",
-      "implicit": true
+      "text": "I have successfully created your evidence pack.\n\n- **Windows used:** 27 Feb 2024 – 11 Apr 2024 (move-in) and 16 Oct 2026 – 6 Nov 2026 (move-out).\n- **Photos:** 4 searched in the move-in window, 6 in the move-out window. 9 were labelled, 1 was unclear, and 0 were left out.\n- **Charges:** 3 charges have both dated photos, 1 charge has only a move-out photo (Bathroom deep clean).\n- **Evidence:**\n    - An album named `Move-out Proof deposit evidence` has been created.\n    - A folder `Documents/Tenancy/Deposit_Evidence` now contains the report `move-out-proof-report.md` and copies of the paired photos.\n\nRemember, this report presents facts from your own library and does not judge whether any charge is fair; you decide what to dispute. Good luck with your deposit claim."
     }
   ],
   "created": [
@@ -1417,7 +1264,7 @@
     {
       "kind": "file",
       "path": "Documents/Tenancy/Deposit_Evidence/move-out-proof-report.md",
-      "bytes": 1651
+      "bytes": 1529
     }
   ],
   "albums": [
@@ -1436,13 +1283,13 @@
     }
   ],
   "usage": {
-    "calls": 40,
-    "input": 98849,
-    "output": 11272,
-    "thoughts": 4962,
+    "calls": 37,
+    "input": 110816,
+    "output": 11427,
+    "thoughts": 5806,
     "cached": 0,
     "by_model": {
-      "gemini-3.1-flash-lite": 40
+      "gemini-3.1-flash-lite": 37
     }
   }
 }

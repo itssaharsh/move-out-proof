@@ -4,34 +4,34 @@
   "phrase": "Help me answer my deposit deduction letter. I moved in on 3 June 2019 and moved out on 30 October 2026. The letter is in Documents, Tenancy.",
   "fixture": "fixtures/apartment",
   "today": "2026-11-06",
-  "started_at": "2026-11-06T16:53:09.197Z",
-  "duration_ms": 11348,
-  "final": "No photos were found between 20 May 2019 and 3 July 2019, which was the move-in window for your move-in date of 3 June 2019. As a result, I cannot create the move-in/move-out photo pairs needed to answer your deposit deduction letter.",
+  "started_at": "2026-11-06T17:03:23.090Z",
+  "duration_ms": 20914,
+  "final": "No photos were found between 20 May 2019 and 3 July 2019, which was the move-in window I searched. Because I cannot compare your move-out photos to any move-in photos, I cannot proceed with the move-out proof report. \n\nIf you have photos from around your move-in date in a different folder or on another device, please let me know, and I can search those locations if you provide them.",
   "steps": [
     {
-      "t": 0,
+      "t": 1,
       "kind": "user",
       "text": "Help me answer my deposit deduction letter. I moved in on 3 June 2019 and moved out on 30 October 2026. The letter is in Documents, Tenancy."
     },
     {
-      "t": 3078,
+      "t": 6206,
       "kind": "delegate",
       "id": "d1",
       "target": "photo-agent",
-      "instruction": "Search the photo library for images (not videos and not screenshots) whose capture time falls inside the move-in window (2019-05-20 to 2019-07-03). If the library search offers scene or object filters, use them to keep only photos of the inside of a home (rooms, walls, floors, kitchen, bathroom, fixtures) and say how many were left out; do not run the vision model in this step. Use the location filter only if the person gave an address or city. For every photo return its photo identifier and file path as the library gives them, and its capture time read from the photo metadata. List photos with no capture time separately as undated. Change nothing. If there are no photos, return an empty list and say so plainly."
+      "instruction": "Search the photo library for images (not videos and not screenshots) whose capture time falls between 2019-05-20 and 2019-07-03. If the library search offers scene or object filters, use them to keep only photos of the inside of a home (rooms, walls, floors, kitchen, bathroom, fixtures) and say how many were left out; do not run the vision model in this step. For every photo return its photo identifier and file path as the library gives them, and its capture time read from the photo metadata. List photos with no capture time separately as undated. Change nothing. If there are no photos, return an empty list and say so plainly."
     },
     {
-      "t": 4447,
+      "t": 7855,
       "kind": "action",
       "delegate": "d1",
       "agent": "photo-agent",
       "cli": "ug-photo",
       "action": "search-picture",
       "args": {
-        "file_type": "image",
-        "end_time": "2019-07-03",
         "start_time": "2019-05-20",
-        "scene": "home interior"
+        "scene": "home interior",
+        "file_type": "image",
+        "end_time": "2019-07-03"
       },
       "result": {
         "ok": true,
@@ -42,11 +42,34 @@
           "scene_filter": "scene recognition is not available in this emulator; every photo in the window is returned"
         }
       },
-      "ms": 39,
+      "ms": 64,
       "write": false
     },
     {
-      "t": 9356,
+      "t": 7919,
+      "kind": "action",
+      "delegate": "d1",
+      "agent": "photo-agent",
+      "cli": "ug-photo",
+      "action": "search-picture",
+      "args": {
+        "start_time": "2019-05-20",
+        "file_type": "image",
+        "end_time": "2019-07-03"
+      },
+      "result": {
+        "ok": true,
+        "data": {
+          "total": 0,
+          "items": [],
+          "photos_without_capture_time": 0
+        }
+      },
+      "ms": 0,
+      "write": false
+    },
+    {
+      "t": 9405,
       "kind": "delegate_result",
       "id": "d1",
       "target": "photo-agent",
@@ -54,27 +77,28 @@
       "message": "No photos were found in the library for the specified date range.",
       "result": {
         "photos": [],
-        "undated_photos": []
+        "undated_photos": [],
+        "left_out_count": 0
       }
     },
     {
-      "t": 9356,
+      "t": 9405,
       "kind": "delegate",
       "id": "d2",
       "target": "photo-agent",
-      "instruction": "Search the photo library for images (not videos and not screenshots) whose capture time falls inside the move-out window (2026-10-16 to 2026-11-06). If the library search offers scene or object filters, use them to keep only photos of the inside of a home (rooms, walls, floors, kitchen, bathroom, fixtures) and say how many were left out; do not run the vision model in this step. Use the location filter only if the person gave an address or city. For every photo return its photo identifier and file path as the library gives them, and its capture time read from the photo metadata. List photos with no capture time separately as undated. Change nothing. If there are no photos, return an empty list and say so plainly."
+      "instruction": "Search the photo library for images (not videos and not screenshots) whose capture time falls between 2026-10-16 and 2026-11-06. If the library search offers scene or object filters, use them to keep only photos of the inside of a home (rooms, walls, floors, kitchen, bathroom, fixtures) and say how many were left out; do not run the vision model in this step. For every photo return its photo identifier and file path as the library gives them, and its capture time read from the photo metadata. List photos with no capture time separately as undated. Change nothing. If there are no photos, return an empty list and say so plainly."
     },
     {
-      "t": 9357,
+      "t": 11186,
       "kind": "action",
       "delegate": "d2",
       "agent": "photo-agent",
       "cli": "ug-photo",
       "action": "search-picture",
       "args": {
-        "file_type": "image",
-        "end_time": "2026-11-06",
         "start_time": "2026-10-16",
+        "end_time": "2026-11-06",
+        "file_type": "image",
         "scene": "home interior"
       },
       "result": {
@@ -117,11 +141,11 @@
           "scene_filter": "scene recognition is not available in this emulator; every photo in the window is returned"
         }
       },
-      "ms": 0,
+      "ms": 1,
       "write": false
     },
     {
-      "t": 9358,
+      "t": 13784,
       "kind": "delegate_result",
       "id": "d2",
       "target": "photo-agent",
@@ -164,43 +188,43 @@
       }
     },
     {
-      "t": 9358,
+      "t": 13784,
       "kind": "delegate",
       "id": "d3",
       "target": "document-agent",
       "instruction": "Find documents the person can access whose content is a letter about the return of a tenancy deposit or proposed deposit deductions, and list each candidate with its file path, date and sender. Change nothing. If none is found, return an empty result and say so."
     },
     {
-      "t": 9358,
+      "t": 13785,
       "kind": "action",
       "delegate": "d3",
       "agent": "document-agent",
       "cli": "ug-document",
       "action": "qa",
       "args": {
-        "query": "Find documents about the return of a tenancy deposit or proposed deposit deductions. Include file path, date, and sender for each.",
-        "intent": "semantic_lookup"
+        "intent": "semantic_lookup",
+        "query": "Find documents about the return of a tenancy deposit or proposed deposit deductions. Include file path, date, and sender for each."
       },
       "result": {
         "ok": true,
         "data": {
-          "answer": "Based on the provided files, here is the document regarding the return of a tenancy deposit:\n\n*   **File path:** `Documents/Tenancy/deduction-letter.pdf`\n*   **Date:** 4 November 2026\n*   **Sender:** Elmfield Lettings, Deposits Team",
+          "answer": "The following document matches your request:\n\n*   **File path:** `Documents/Tenancy/deduction-letter.pdf`\n*   **Date:** 4 November 2026\n*   **Sender:** Elmfield Lettings, Deposits Team",
           "evidence": [
             "CREDITS.md",
             "Documents/Tenancy/deduction-letter.pdf"
           ]
         }
       },
-      "ms": 6,
+      "ms": 16,
       "write": false
     },
     {
-      "t": 9364,
+      "t": 13801,
       "kind": "delegate_result",
       "id": "d3",
       "target": "document-agent",
       "status": "completed",
-      "message": "Found one document regarding the return of a tenancy deposit.",
+      "message": "Found one document matching the criteria.",
       "result": [
         {
           "file_path": "Documents/Tenancy/deduction-letter.pdf",
@@ -210,21 +234,21 @@
       ]
     },
     {
-      "t": 11348,
+      "t": 20914,
       "kind": "finish",
-      "text": "No photos were found between 20 May 2019 and 3 July 2019, which was the move-in window for your move-in date of 3 June 2019. As a result, I cannot create the move-in/move-out photo pairs needed to answer your deposit deduction letter."
+      "text": "No photos were found between 20 May 2019 and 3 July 2019, which was the move-in window I searched. Because I cannot compare your move-out photos to any move-in photos, I cannot proceed with the move-out proof report. \n\nIf you have photos from around your move-in date in a different folder or on another device, please let me know, and I can search those locations if you provide them."
     }
   ],
   "created": [],
   "albums": [],
   "usage": {
-    "calls": 4,
-    "input": 14744,
-    "output": 630,
-    "thoughts": 494,
-    "cached": 5,
+    "calls": 6,
+    "input": 17144,
+    "output": 1200,
+    "thoughts": 964,
+    "cached": 3,
     "by_model": {
-      "gemini-3.1-flash-lite": 4
+      "gemini-3.1-flash-lite": 6
     }
   }
 }
