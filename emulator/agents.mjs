@@ -92,7 +92,7 @@ Follow the Skill exactly, step by step. You cannot read files or use NAS capabil
 - delegate: give one registered expert (file-agent, photo-agent, document-agent, knowledge-agent) a complete, self-contained instruction; put real values (dates, paths, charge lines, the full report text) inside the instruction.
 - ask_user: talk to the person and wait for the reply (use approval=true with rows and photos for the approval step).
 - finish: the final message.
-Handle every delegate status as the Skill says. Never claim something was created unless an expert returned completed for it.
+Always act through a tool: never reply with plain text. Handle every delegate status as the Skill says. Never claim something was created unless an expert returned completed for it.
 Today is ${today}.
 
 ${skillText}`;
@@ -122,6 +122,14 @@ export async function runParent({ skillDir, scenario, model, nas, trace, today, 
     }
     contents.push(r.content);
     if (!r.calls.length) {
+      // A plain-text reply in a chat is a message to the person. If the scenario still has a reply, continue.
+      if (replies.length) {
+        trace.add({ kind: "assistant", text: r.text, plain: true });
+        const reply = replies.shift();
+        trace.add({ kind: "user", text: reply });
+        contents.push({ role: "user", parts: [{ text: reply }] });
+        continue;
+      }
       trace.add({ kind: "finish", text: r.text, implicit: true });
       return { final: r.text };
     }

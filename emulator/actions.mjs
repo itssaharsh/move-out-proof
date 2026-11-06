@@ -42,13 +42,13 @@ const ACTIONS = {
   search_picture: {
     cli: "ug-photo", action: "search-picture", approval: "none",
     decl: { description: "Search the photo library. Filters: capture time window (start_time, end_time as YYYY-MM-DD), file_type, location. Returns file paths and capture times from photo metadata.",
-      parameters: { type: "OBJECT", properties: { start_time: S("YYYY-MM-DD"), end_time: S("YYYY-MM-DD"), file_type: S("all | image | video"), location: S("optional place name") } } },
+      parameters: { type: "OBJECT", properties: { start_time: S("YYYY-MM-DD"), end_time: S("YYYY-MM-DD"), file_type: S("all | image | video"), location: S("optional place name"), scene: S("optional scene or object filter, e.g. home interior") } } },
     async run(a, ctx) {
       const photos = await ctx.nas.photos();
       let items = photos;
       if (a.start_time || a.end_time) items = items.filter((p) => inWindow(p.capture_time, a.start_time ?? "0000", a.end_time ?? "9999"));
       const undated = photos.filter((p) => !p.capture_time).length;
-      return ok({ total: items.length, items: items.map((p) => ({ id: photoId(p.path), path: p.path, capture_time: p.capture_time })), photos_without_capture_time: undated, location_filter: a.location ? "no location metadata in this library; filter not applied" : undefined });
+      return ok({ total: items.length, items: items.map((p) => ({ id: photoId(p.path), path: p.path, capture_time: p.capture_time })), photos_without_capture_time: undated, location_filter: a.location ? "no location metadata in this library; filter not applied" : undefined, scene_filter: a.scene ? "scene recognition is not available in this emulator; every photo in the window is returned" : undefined });
     },
   },
   meta: {

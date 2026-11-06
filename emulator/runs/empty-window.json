@@ -4,43 +4,33 @@
   "phrase": "Help me answer my deposit deduction letter. I moved in on 3 June 2019 and moved out on 30 October 2026. The letter is in Documents, Tenancy.",
   "fixture": "fixtures/apartment",
   "today": "2026-11-06",
-  "started_at": "2026-11-06T15:15:12.544Z",
-  "duration_ms": 9999,
-  "final": "No photos were found between 20 May 2019 and 3 July 2019 (the move-in window). As stated in the Skill guide, when either window returns no results, the search stops. Nothing was created.",
+  "started_at": "2026-11-06T15:44:29.183Z",
+  "duration_ms": 22079,
+  "final": "No photos were found between 20 May 2019 and 3 July 2019 (your move-in window). As per the guidelines, the process stops here because move-in photos are required to pair with move-out evidence.",
   "steps": [
     {
-      "t": 0,
+      "t": 1,
       "kind": "user",
       "text": "Help me answer my deposit deduction letter. I moved in on 3 June 2019 and moved out on 30 October 2026. The letter is in Documents, Tenancy."
     },
     {
-      "t": 2840,
-      "kind": "assistant",
-      "text": "We will search for move-in photos between 20 May 2019 and 3 July 2019 (14 days before to 30 days after 3 June 2019), and move-out photos between 16 October 2026 and 6 November 2026 (14 days before to 7 days after 30 October 2026). Let's begin searching your photo library and tenancy documents."
-    },
-    {
-      "t": 2840,
-      "kind": "user",
-      "text": "No, leave it there."
-    },
-    {
-      "t": 4268,
+      "t": 5235,
       "kind": "delegate",
       "id": "d1",
       "target": "photo-agent",
-      "instruction": "Search the photo library for images (not videos) whose capture time falls inside the move-in window from 2019-05-20 to 2019-07-03, and separately inside the move-out window from 2026-10-16 to 2026-11-06. For every photo return its file path and its capture time read from the photo metadata. Change nothing. If a window has no photos, return an empty list for that window and say so plainly."
+      "instruction": "Search the photo library for images (not videos and not screenshots) whose capture time falls inside the move-in window from 20 May 2019 to 3 July 2019, and separately inside the move-out window from 16 October 2026 to 6 November 2026. Where the library scene or object recognition can tell, keep only photos of the inside of a home (rooms, walls, floors, kitchen, bathroom, fixtures) and leave out photos of people, food, documents and outdoor scenes, saying how many were left out this way. Use the location filter only if the person gave an address or city. For every photo return its photo identifier and file path as the library gives them, and its capture time read from the photo metadata. List photos with no capture time separately as undated. Change nothing. If a window has no photos, return an empty list for that window and say so plainly."
     },
     {
-      "t": 5408,
+      "t": 6561,
       "kind": "action",
       "delegate": "d1",
       "agent": "photo-agent",
       "cli": "ug-photo",
       "action": "search-picture",
       "args": {
+        "end_time": "2019-07-03",
         "start_time": "2019-05-20",
-        "file_type": "image",
-        "end_time": "2019-07-03"
+        "file_type": "image"
       },
       "result": {
         "ok": true,
@@ -50,20 +40,20 @@
           "photos_without_capture_time": 0
         }
       },
-      "ms": 64,
+      "ms": 39,
       "write": false
     },
     {
-      "t": 5472,
+      "t": 6601,
       "kind": "action",
       "delegate": "d1",
       "agent": "photo-agent",
       "cli": "ug-photo",
       "action": "search-picture",
       "args": {
-        "end_time": "2026-11-06",
+        "file_type": "image",
         "start_time": "2026-10-16",
-        "file_type": "image"
+        "end_time": "2026-11-06"
       },
       "result": {
         "ok": true,
@@ -71,26 +61,32 @@
           "total": 6,
           "items": [
             {
+              "id": "ph_8dba06d247",
               "path": "Photos/2026/10/IMG_20261030_140631.jpg",
               "capture_time": "2026-10-30 14:06:31"
             },
             {
+              "id": "ph_e89ab0c301",
               "path": "Photos/2026/10/IMG_20261030_141152.jpg",
               "capture_time": "2026-10-30 14:11:52"
             },
             {
+              "id": "ph_f0da66653f",
               "path": "Photos/2026/10/IMG_20261030_141607.jpg",
               "capture_time": "2026-10-30 14:16:07"
             },
             {
+              "id": "ph_5e35ee9a35",
               "path": "Photos/2026/10/IMG_20261030_142144.jpg",
               "capture_time": "2026-10-30 14:21:44"
             },
             {
+              "id": "ph_d840e6f495",
               "path": "Photos/2026/10/IMG_20261030_142719.jpg",
               "capture_time": "2026-10-30 14:27:19"
             },
             {
+              "id": "ph_ee70778dc5",
               "path": "Photos/2026/10/IMG_20261030_143305.jpg",
               "capture_time": "2026-10-30 14:33:05"
             }
@@ -98,11 +94,137 @@
           "photos_without_capture_time": 0
         }
       },
-      "ms": 0,
+      "ms": 1,
       "write": false
     },
     {
-      "t": 6774,
+      "t": 8288,
+      "kind": "action",
+      "delegate": "d1",
+      "agent": "photo-agent",
+      "cli": "ug-photo",
+      "action": "vision-vlm",
+      "args": {
+        "prompt": "Is this photo showing the inside of a home (rooms, walls, floors, kitchen, bathroom, fixtures)? Answer yes or no.",
+        "path": "Photos/2026/10/IMG_20261030_140631.jpg"
+      },
+      "result": {
+        "ok": true,
+        "data": {
+          "path": "Photos/2026/10/IMG_20261030_140631.jpg",
+          "answer": "Yes"
+        }
+      },
+      "ms": 113,
+      "write": false
+    },
+    {
+      "t": 8401,
+      "kind": "action",
+      "delegate": "d1",
+      "agent": "photo-agent",
+      "cli": "ug-photo",
+      "action": "vision-vlm",
+      "args": {
+        "prompt": "Is this photo showing the inside of a home (rooms, walls, floors, kitchen, bathroom, fixtures)? Answer yes or no.",
+        "path": "Photos/2026/10/IMG_20261030_141152.jpg"
+      },
+      "result": {
+        "ok": true,
+        "data": {
+          "path": "Photos/2026/10/IMG_20261030_141152.jpg",
+          "answer": "Yes"
+        }
+      },
+      "ms": 1908,
+      "write": false
+    },
+    {
+      "t": 10309,
+      "kind": "action",
+      "delegate": "d1",
+      "agent": "photo-agent",
+      "cli": "ug-photo",
+      "action": "vision-vlm",
+      "args": {
+        "path": "Photos/2026/10/IMG_20261030_141607.jpg",
+        "prompt": "Is this photo showing the inside of a home (rooms, walls, floors, kitchen, bathroom, fixtures)? Answer yes or no."
+      },
+      "result": {
+        "ok": true,
+        "data": {
+          "path": "Photos/2026/10/IMG_20261030_141607.jpg",
+          "answer": "Yes."
+        }
+      },
+      "ms": 2323,
+      "write": false
+    },
+    {
+      "t": 12632,
+      "kind": "action",
+      "delegate": "d1",
+      "agent": "photo-agent",
+      "cli": "ug-photo",
+      "action": "vision-vlm",
+      "args": {
+        "path": "Photos/2026/10/IMG_20261030_142144.jpg",
+        "prompt": "Is this photo showing the inside of a home (rooms, walls, floors, kitchen, bathroom, fixtures)? Answer yes or no."
+      },
+      "result": {
+        "ok": true,
+        "data": {
+          "path": "Photos/2026/10/IMG_20261030_142144.jpg",
+          "answer": "Yes."
+        }
+      },
+      "ms": 1520,
+      "write": false
+    },
+    {
+      "t": 14152,
+      "kind": "action",
+      "delegate": "d1",
+      "agent": "photo-agent",
+      "cli": "ug-photo",
+      "action": "vision-vlm",
+      "args": {
+        "prompt": "Is this photo showing the inside of a home (rooms, walls, floors, kitchen, bathroom, fixtures)? Answer yes or no.",
+        "path": "Photos/2026/10/IMG_20261030_142719.jpg"
+      },
+      "result": {
+        "ok": true,
+        "data": {
+          "path": "Photos/2026/10/IMG_20261030_142719.jpg",
+          "answer": "Yes."
+        }
+      },
+      "ms": 1130,
+      "write": false
+    },
+    {
+      "t": 15282,
+      "kind": "action",
+      "delegate": "d1",
+      "agent": "photo-agent",
+      "cli": "ug-photo",
+      "action": "vision-vlm",
+      "args": {
+        "prompt": "Is this photo showing the inside of a home (rooms, walls, floors, kitchen, bathroom, fixtures)? Answer yes or no.",
+        "path": "Photos/2026/10/IMG_20261030_143305.jpg"
+      },
+      "result": {
+        "ok": true,
+        "data": {
+          "path": "Photos/2026/10/IMG_20261030_143305.jpg",
+          "answer": "Yes."
+        }
+      },
+      "ms": 1908,
+      "write": false
+    },
+    {
+      "t": 18367,
       "kind": "action",
       "delegate": "d1",
       "agent": "photo-agent",
@@ -114,6 +236,7 @@
       "result": {
         "ok": true,
         "data": {
+          "id": "ph_8dba06d247",
           "path": "Photos/2026/10/IMG_20261030_140631.jpg",
           "capture_time": "2026-10-30 14:06:31",
           "software": "Move-out Proof staged fixture"
@@ -123,7 +246,7 @@
       "write": false
     },
     {
-      "t": 6774,
+      "t": 18367,
       "kind": "action",
       "delegate": "d1",
       "agent": "photo-agent",
@@ -135,6 +258,7 @@
       "result": {
         "ok": true,
         "data": {
+          "id": "ph_e89ab0c301",
           "path": "Photos/2026/10/IMG_20261030_141152.jpg",
           "capture_time": "2026-10-30 14:11:52",
           "software": "Move-out Proof staged fixture"
@@ -144,7 +268,7 @@
       "write": false
     },
     {
-      "t": 6774,
+      "t": 18367,
       "kind": "action",
       "delegate": "d1",
       "agent": "photo-agent",
@@ -156,6 +280,7 @@
       "result": {
         "ok": true,
         "data": {
+          "id": "ph_f0da66653f",
           "path": "Photos/2026/10/IMG_20261030_141607.jpg",
           "capture_time": "2026-10-30 14:16:07",
           "software": "Move-out Proof staged fixture"
@@ -165,7 +290,7 @@
       "write": false
     },
     {
-      "t": 6774,
+      "t": 18367,
       "kind": "action",
       "delegate": "d1",
       "agent": "photo-agent",
@@ -177,6 +302,7 @@
       "result": {
         "ok": true,
         "data": {
+          "id": "ph_5e35ee9a35",
           "path": "Photos/2026/10/IMG_20261030_142144.jpg",
           "capture_time": "2026-10-30 14:21:44",
           "software": "Move-out Proof staged fixture"
@@ -186,7 +312,7 @@
       "write": false
     },
     {
-      "t": 6774,
+      "t": 18367,
       "kind": "action",
       "delegate": "d1",
       "agent": "photo-agent",
@@ -198,6 +324,7 @@
       "result": {
         "ok": true,
         "data": {
+          "id": "ph_d840e6f495",
           "path": "Photos/2026/10/IMG_20261030_142719.jpg",
           "capture_time": "2026-10-30 14:27:19",
           "software": "Move-out Proof staged fixture"
@@ -207,7 +334,7 @@
       "write": false
     },
     {
-      "t": 6774,
+      "t": 18367,
       "kind": "action",
       "delegate": "d1",
       "agent": "photo-agent",
@@ -219,6 +346,7 @@
       "result": {
         "ok": true,
         "data": {
+          "id": "ph_ee70778dc5",
           "path": "Photos/2026/10/IMG_20261030_143305.jpg",
           "capture_time": "2026-10-30 14:33:05",
           "software": "Move-out Proof staged fixture"
@@ -228,58 +356,72 @@
       "write": false
     },
     {
-      "t": 8514,
+      "t": 20614,
       "kind": "delegate_result",
       "id": "d1",
       "target": "photo-agent",
       "status": "completed",
-      "message": "The move-in window has no photos, while the move-out window contains 6 photos.",
+      "message": "Found zero photos in the move-in window and 6 photos in the move-out window, with 0 photos left out.",
       "result": {
-        "move_in_window": [],
-        "move_out_window": [
-          {
-            "capture_time": "2026-10-30 14:06:31",
-            "path": "Photos/2026/10/IMG_20261030_140631.jpg"
-          },
-          {
-            "capture_time": "2026-10-30 14:11:52",
-            "path": "Photos/2026/10/IMG_20261030_141152.jpg"
-          },
-          {
-            "capture_time": "2026-10-30 14:16:07",
-            "path": "Photos/2026/10/IMG_20261030_141607.jpg"
-          },
-          {
-            "capture_time": "2026-10-30 14:21:44",
-            "path": "Photos/2026/10/IMG_20261030_142144.jpg"
-          },
-          {
-            "capture_time": "2026-10-30 14:27:19",
-            "path": "Photos/2026/10/IMG_20261030_142719.jpg"
-          },
-          {
-            "capture_time": "2026-10-30 14:33:05",
-            "path": "Photos/2026/10/IMG_20261030_143305.jpg"
-          }
-        ]
+        "move_in_window": {
+          "photos": [],
+          "message": "The move-in window has no photos."
+        },
+        "move_out_window": {
+          "photos": [
+            {
+              "capture_time": "2026-10-30 14:06:31",
+              "id": "ph_8dba06d247",
+              "path": "Photos/2026/10/IMG_20261030_140631.jpg"
+            },
+            {
+              "capture_time": "2026-10-30 14:11:52",
+              "id": "ph_e89ab0c301",
+              "path": "Photos/2026/10/IMG_20261030_141152.jpg"
+            },
+            {
+              "capture_time": "2026-10-30 14:16:07",
+              "id": "ph_f0da66653f",
+              "path": "Photos/2026/10/IMG_20261030_141607.jpg"
+            },
+            {
+              "capture_time": "2026-10-30 14:21:44",
+              "id": "ph_5e35ee9a35",
+              "path": "Photos/2026/10/IMG_20261030_142144.jpg"
+            },
+            {
+              "capture_time": "2026-10-30 14:27:19",
+              "id": "ph_d840e6f495",
+              "path": "Photos/2026/10/IMG_20261030_142719.jpg"
+            },
+            {
+              "capture_time": "2026-10-30 14:33:05",
+              "id": "ph_ee70778dc5",
+              "path": "Photos/2026/10/IMG_20261030_143305.jpg"
+            }
+          ],
+          "undated": []
+        },
+        "left_out_count": 0
       }
     },
     {
-      "t": 9999,
+      "t": 22079,
       "kind": "finish",
-      "text": "No photos were found between 20 May 2019 and 3 July 2019 (the move-in window). As stated in the Skill guide, when either window returns no results, the search stops. Nothing was created."
+      "text": "No photos were found between 20 May 2019 and 3 July 2019 (your move-in window). As per the guidelines, the process stops here because move-in photos are required to pair with move-out evidence.",
+      "implicit": true
     }
   ],
   "created": [],
   "albums": [],
   "usage": {
-    "calls": 6,
-    "input": 19410,
-    "output": 1058,
-    "thoughts": 0,
+    "calls": 12,
+    "input": 27200,
+    "output": 1657,
+    "thoughts": 1256,
     "cached": 0,
     "by_model": {
-      "gemini-3.5-flash-lite": 6
+      "gemini-3.5-flash-lite": 12
     }
   }
 }
