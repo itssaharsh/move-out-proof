@@ -36,6 +36,9 @@ for (const file of runs) {
   const visible = new Map();
   const labelling = (a) => /^Which part of a rented home/.test(a.args?.prompt ?? "");
   for (const a of actions.filter((x) => x.action === "vision-vlm" && x.result?.ok && labelling(x))) { labels.set(norm(a.args.path), labelOf(a.result.data.answer)); visible.set(norm(a.args.path), [labelOf(a.result.data.answer), ...alsoOf(a.result.data.answer)]); }
+  const windowed = new Set(actions.filter((x) => x.action === "search-picture" && x.result?.ok && x.args?.start_time && x.args?.end_time).flatMap((x) => x.result.data.items.map((i) => norm(i.path))));
+  const outside = actions.filter((x) => x.action === "vision-vlm" && labelling(x) && !windowed.has(norm(x.args.path))).map((x) => x.args.path);
+  check(run, "only photos from the dated windows are labelled", outside.length === 0, outside.join(", "));
   const strayVision = actions.filter((x) => x.action === "vision-vlm" && !labelling(x));
   check(run, "the vision model is used only to label spots", strayVision.length === 0, `${strayVision.length} other vision calls, e.g. "${(strayVision[0]?.args?.prompt ?? "").slice(0, 50)}"`);
 
