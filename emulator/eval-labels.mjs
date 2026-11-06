@@ -44,10 +44,11 @@ if (!existsSync(OUT)) {
 const saved = JSON.parse(readFileSync(OUT, "utf8"));
 const n = saved.rows.length, correct = saved.rows.filter((r) => r.correct).length;
 const spots = saved.rows.filter((r) => !["unclear", "not-a-spot"].includes(r.truth));
-const wrongSpot = saved.rows.filter((r) => !r.correct && !["unclear", "not-a-spot"].includes(r.label) && !["unclear", "not-a-spot"].includes(r.truth));
+// Safe = the true spot is the main label or listed as also visible, or the photo fell back to unclear.
+const wrongSpot = saved.rows.filter((r) => !(r.covered ?? r.correct) && r.label !== "unclear" && !["unclear", "not-a-spot"].includes(r.truth));
 const covered = saved.rows.filter((r) => r.covered ?? r.correct).length;
 console.log(`main label: ${correct}/${n} correct; spot in frame (main or also-visible): ${covered}/${n}`);
-console.log(`labels: ${correct}/${n} correct (${Math.round((100 * correct) / n)}%) with ${saved.model}; spot photos ${spots.filter((r) => r.correct).length}/${spots.length}; labelled as the WRONG spot: ${wrongSpot.length}`);
+console.log(`labels: ${correct}/${n} correct (${Math.round((100 * correct) / n)}%) with ${saved.model}; spot photos ${spots.filter((r) => r.correct).length}/${spots.length}; spot photos placed on a wrong spot (true spot neither main nor also visible): ${wrongSpot.length}`);
 for (const r of saved.rows.filter((x) => !x.correct)) console.log(`  miss: ${r.file} truth=${r.truth} got=${r.label}`);
 // The Skill's safety property: a photo may fall back to unclear, but must not be labelled as a different spot.
 process.exit(wrongSpot.length === 0 ? 0 : 1);

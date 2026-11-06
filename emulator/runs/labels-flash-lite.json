@@ -1,0 +1,147 @@
+{
+  "model": "gemini-3.5-flash-lite",
+  "by_model": {
+    "gemini-3.5-flash-lite": 12
+  },
+  "prompt": "Which part of a rented home does this photo show? Answer on the first line with exactly one label for the main subject, from this list: kitchen-oven, kitchen-counter, kitchen-sink, fridge, bathroom-tub, bathroom-sink, toilet, living-room-wall, living-room-carpet, bedroom-wall, bedroom-carpet, window, front-door, not-a-spot, unclear. Use unclear when the photo is too dark or too blurry to tell. On the second line list any other labels from the same list that are also clearly visible, separated by commas, or write none. On the third line write one sentence about visible dirt, stains, marks or damage, or write none visible.",
+  "at": "2026-11-06T15:20:07.748Z",
+  "usage": {
+    "calls": 12,
+    "input": 15078,
+    "output": 156,
+    "thoughts": 0,
+    "cached": 0
+  },
+  "rows": [
+    {
+      "model": "gemini-3.5-flash-lite",
+      "file": "Photos/2024/03/IMG_20240312_100412.jpg",
+      "truth": "kitchen-oven",
+      "label": "kitchen-oven",
+      "also": [
+        "kitchen-counter",
+        "kitchen-sink"
+      ],
+      "correct": true,
+      "covered": true,
+      "answer": "kitchen-oven\nkitchen-counter, kitchen-sink\nnone visible"
+    },
+    {
+      "model": "gemini-3.5-flash-lite",
+      "file": "Photos/2024/03/IMG_20240312_101140.jpg",
+      "truth": "living-room-carpet",
+      "label": "living-room-carpet",
+      "also": [],
+      "correct": true,
+      "covered": true,
+      "answer": "living-room-carpet\nnone\nA large brownish stain is visible on the light-colored carpet."
+    },
+    {
+      "model": "gemini-3.5-flash-lite",
+      "file": "Photos/2024/03/IMG_20240312_101725.jpg",
+      "truth": "living-room-wall",
+      "label": "living-room-wall",
+      "also": [],
+      "correct": true,
+      "covered": true,
+      "answer": "living-room-wall\nnone\nnone visible"
+    },
+    {
+      "model": "gemini-3.5-flash-lite",
+      "file": "Photos/2024/03/IMG_20240312_102408.jpg",
+      "truth": "bedroom-wall",
+      "label": "bedroom-wall",
+      "also": [
+        "window"
+      ],
+      "correct": true,
+      "covered": true,
+      "answer": "bedroom-wall\nwindow\nnone visible"
+    },
+    {
+      "model": "gemini-3.5-flash-lite",
+      "file": "Photos/2026/10/IMG_20261030_140631.jpg",
+      "truth": "kitchen-oven",
+      "label": "kitchen-oven",
+      "also": [
+        "kitchen-counter",
+        "kitchen-sink"
+      ],
+      "correct": true,
+      "covered": true,
+      "answer": "kitchen-oven\nkitchen-counter, kitchen-sink\nnone visible"
+    },
+    {
+      "model": "gemini-3.5-flash-lite",
+      "file": "Photos/2026/10/IMG_20261030_141152.jpg",
+      "truth": "living-room-carpet",
+      "label": "living-room-carpet",
+      "also": [],
+      "correct": true,
+      "covered": true,
+      "answer": "living-room-carpet\nnone\nA brown stain is visible on the light-colored carpet."
+    },
+    {
+      "model": "gemini-3.5-flash-lite",
+      "file": "Photos/2026/10/IMG_20261030_141607.jpg",
+      "truth": "living-room-wall",
+      "label": "living-room-wall",
+      "also": [],
+      "correct": true,
+      "covered": true,
+      "answer": "living-room-wall\nnone\nThere are four dark holes or marks on the wall to the upper left of the framed picture."
+    },
+    {
+      "model": "gemini-3.5-flash-lite",
+      "file": "Photos/2026/10/IMG_20261030_142144.jpg",
+      "truth": "bathroom-tub",
+      "label": "bathroom-tub",
+      "also": [],
+      "correct": true,
+      "covered": true,
+      "answer": "bathroom-tub\nnone\nnone visible"
+    },
+    {
+      "model": "gemini-3.5-flash-lite",
+      "file": "Photos/2026/10/IMG_20261030_142719.jpg",
+      "truth": "bedroom-wall",
+      "label": "bedroom-wall",
+      "also": [
+        "window"
+      ],
+      "correct": true,
+      "covered": true,
+      "answer": "bedroom-wall\nwindow\nnone visible"
+    },
+    {
+      "model": "gemini-3.5-flash-lite",
+      "file": "Photos/2026/10/IMG_20261030_143305.jpg",
+      "truth": "unclear",
+      "label": "unclear",
+      "also": [],
+      "correct": true,
+      "covered": true,
+      "answer": "unclear\nnone\nnone"
+    },
+    {
+      "model": "gemini-3.5-flash-lite",
+      "file": "Photos/2025/07/IMG_20250719_162000.jpg",
+      "truth": "not-a-spot",
+      "label": "not-a-spot",
+      "also": [],
+      "correct": true,
+      "covered": true,
+      "answer": "not-a-spot\nnone\nnone visible"
+    },
+    {
+      "model": "gemini-3.5-flash-lite",
+      "file": "Photos/2025/12/IMG_20251224_194500.jpg",
+      "truth": "not-a-spot",
+      "label": "not-a-spot",
+      "also": [],
+      "correct": true,
+      "covered": true,
+      "answer": "not-a-spot\nnone\nnone visible"
+    }
+  ]
+}
