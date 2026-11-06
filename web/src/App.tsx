@@ -78,7 +78,7 @@ export function App() {
     tRef.current = 0; setN(0); setT(0); setPlaying(false);
     const s = forcedState;
     const apIdx = tl.events.findIndex((e) => e.kind === "step" && run.steps[e.i].kind === "approval_request");
-    if (params.get("t")) seek(Number(params.get("t")));
+    if (params.get("t")) seek(Math.min(Math.max(0, Number(params.get("t")) || 0), tl.total));
     else if (s === "result") seek(tl.total);
     else if (s === "approval" && apIdx >= 0) seek(tl.events[apIdx].at + 150);
     else if (s === "playing") seek(tl.total * 0.35);
