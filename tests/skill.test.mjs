@@ -36,7 +36,7 @@ test("empty results stop the run with a plain sentence instead of widening the s
 
 test("the vision prompt uses exactly the labels in references/spots.md", () => {
   const prompt = delegates.find((d) => d.text.includes("Which part of a rented home"));
-  const promptLabels = prompt.text.match(/list: ([a-z\-, ]+)\./)[1].split(", ").sort();
+  const promptLabels = prompt.text.match(/from this list: ([a-z\-, ]+)\./)[1].split(", ").sort();
   const refLabels = [...spots.matchAll(/^\| `([a-z-]+)` \|/gm)].map((m) => m[1]).concat(["not-a-spot", "unclear"]).sort();
   assert.deepEqual(promptLabels, refLabels);
 });

@@ -22,7 +22,7 @@ mkdirSync(out, { recursive: true });
 
 const model = new GeminiModel({ minGapMs: Number(process.env.EMULATOR_GAP_MS ?? 0) });
 const nas = new Nas({ fixture: scenario.fixture, out });
-const trace = new Trace({ id: scenario.id, title: scenario.title, phrase: scenario.phrase, fixture: scenario.fixture, model: model.model, today: scenario.today });
+const trace = new Trace({ id: scenario.id, title: scenario.title, phrase: scenario.phrase, fixture: scenario.fixture, today: scenario.today });
 const t0 = Date.now();
 let final, error;
 try {
@@ -40,7 +40,7 @@ const result = {
   steps: trace.steps,
   created: nas.created,
   albums: nas.albums,
-  usage: model.usage,
+  usage: { ...model.usage, by_model: model.byModel },
 };
 writeFileSync(path.join(out, "trace.json"), JSON.stringify(result, null, 2));
 if (args.includes("--save")) {
@@ -49,7 +49,7 @@ if (args.includes("--save")) {
 }
 const delegates = trace.steps.filter((s) => s.kind === "delegate").length;
 const actions = trace.steps.filter((s) => s.kind === "action").length;
-console.log(`${scenario.id}: ${error ? "ERROR " + error : "done"} in ${(result.duration_ms / 1000).toFixed(1)}s | delegates=${delegates} actions=${actions} created=${nas.created.length} | model calls=${model.usage.calls} in=${model.usage.input} out=${model.usage.output} thoughts=${model.usage.thoughts}`);
+console.log(`${scenario.id}: ${error ? "ERROR " + error : "done"} in ${(result.duration_ms / 1000).toFixed(1)}s | delegates=${delegates} actions=${actions} created=${nas.created.length} | model calls=${model.usage.calls} cached=${model.usage.cached} ${JSON.stringify(model.byModel)} in=${model.usage.input} out=${model.usage.output} thoughts=${model.usage.thoughts}`);
 console.log(`trace: ${path.relative(process.cwd(), out)}/trace.json`);
 console.log(`final: ${(final ?? "").slice(0, 400)}`);
 process.exit(error ? 1 : 0);

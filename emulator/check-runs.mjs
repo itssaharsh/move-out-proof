@@ -14,6 +14,7 @@ const check = (run, name, ok, detail = "") => {
 
 function norm(p) { return (p ?? "").replace(/^\/+/, ""); }
 function labelOf(answer) { return (answer ?? "").trim().split("\n")[0].replace(/[`*.\s]/g, "").toLowerCase(); }
+function alsoOf(answer) { return ((answer ?? "").trim().split("\n")[1] ?? "").toLowerCase().split(/[,\s]+/).map((x) => x.replace(/[`*.]/g, "")).filter((x) => x && x !== "none"); }
 
 for (const file of runs) {
   const run = JSON.parse(readFileSync(`emulator/runs/${file}`, "utf8"));
@@ -24,7 +25,8 @@ for (const file of runs) {
   const searched = new Map();
   for (const a of actions.filter((x) => x.action === "search-picture" && x.result?.ok)) for (const i of a.result.data.items) searched.set(norm(i.path), i.capture_time);
   const labels = new Map();
-  for (const a of actions.filter((x) => x.action === "vision-vlm" && x.result?.ok)) labels.set(norm(a.args.path), labelOf(a.result.data.answer));
+  const visible = new Map();
+  for (const a of actions.filter((x) => x.action === "vision-vlm" && x.result?.ok)) { labels.set(norm(a.args.path), labelOf(a.result.data.answer)); visible.set(norm(a.args.path), [labelOf(a.result.data.answer), ...alsoOf(a.result.data.answer)]); }
 
   check(run, "run finished without an error", !run.error && !!run.final, run.error);
 
@@ -42,8 +44,8 @@ for (const file of runs) {
   const paths = rows.flatMap((r) => [r.move_in_path, r.move_out_path]).filter(Boolean).map(norm);
   const invented = paths.filter((p) => !truth[p]);
   check(run, "every photo in the rows exists in the library", invented.length === 0, invented.join(", "));
-  const cross = rows.filter((r) => r.move_in_path && r.move_out_path && labels.get(norm(r.move_in_path)) && labels.get(norm(r.move_in_path)) !== labels.get(norm(r.move_out_path)));
-  check(run, "no pair mixes two different spot labels", cross.length === 0, cross.map((r) => r.spot).join(", "));
+  const cross = rows.flatMap((r) => [r.move_in_path, r.move_out_path].filter(Boolean).filter((p) => visible.get(norm(p)) && !visible.get(norm(p)).includes(r.spot)).map((p) => `${r.spot}:${p}`));
+  check(run, "every paired photo shows the row's spot (main or also visible)", cross.length === 0, cross.join(", "));
   const unclearPaired = paths.filter((p) => labels.get(p) === "unclear");
   check(run, "photos labelled unclear are never paired", unclearPaired.length === 0, unclearPaired.join(", "));
 

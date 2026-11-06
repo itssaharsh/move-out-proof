@@ -44,8 +44,14 @@ export async function runExpert({ agent, instruction, model, nas, trace, gate, d
   const contents = [{ role: "user", parts: [{ text: instruction }] }];
   const ctx = { agent, model, nas, trace, gate, delegateId };
   let calls = 0;
+  let nudged = false;
   for (;;) {
     const r = await model.generate({ agent, system: EXPERT_SYSTEM(agent), contents, tools });
+    if (!r.calls.length && !r.text && !nudged) {
+      nudged = true;
+      contents.push({ role: "user", parts: [{ text: "Continue: call a tool, or return the JSON result." }] });
+      continue;
+    }
     contents.push(r.content);
     if (!r.calls.length) return parseResult(r.text);
     const responses = [];
@@ -104,8 +110,16 @@ export async function runParent({ skillDir, scenario, model, nas, trace, today, 
   const contents = [{ role: "user", parts: [{ text: scenario.phrase }] }];
   trace.add({ kind: "user", text: scenario.phrase });
   let delegates = 0;
+  let nudges = 0;
   for (let turn = 0; turn < maxTurns; turn++) {
     const r = await model.generate({ agent: "main", system: PARENT_SYSTEM(loadSkill(skillDir), today), contents, tools: PARENT_TOOLS });
+    if (!r.calls.length && !r.text && nudges < 2) {
+      // An empty reply (no tool call, no text) is a model hiccup, not a decision: ask once more.
+      nudges += 1;
+      trace.add({ kind: "note", text: `empty model reply (${r.finish ?? "no reason"}); asked the main agent to continue` });
+      contents.push({ role: "user", parts: [{ text: "Continue with the next step of the Skill. Use a tool." }] });
+      continue;
+    }
     contents.push(r.content);
     if (!r.calls.length) {
       trace.add({ kind: "finish", text: r.text, implicit: true });

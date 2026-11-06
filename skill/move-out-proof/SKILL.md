@@ -53,14 +53,15 @@ Pass to each step only the real result the previous step returned: real file pat
 
 **Step 2. Name the spot in each photo.**
 
-`delegate --target photo-agent --instruction 'For each photo path returned by the search step, run the vision model on that single image with this prompt: Which part of a rented home does this photo show? Answer on the first line with exactly one label from this list: kitchen-oven, kitchen-counter, kitchen-sink, fridge, bathroom-tub, bathroom-sink, toilet, living-room-wall, living-room-carpet, bedroom-wall, bedroom-carpet, window, front-door, not-a-spot, unclear. Use unclear when the photo is too dark or too blurry to tell. On the second line write one sentence about visible dirt, stains, marks or damage, or write none visible. Return the path, the capture time from the search step, the label and the sentence for every photo. Do not guess a label for a photo you cannot read.'`
+`delegate --target photo-agent --instruction 'For each photo path returned by the search step, run the vision model on that single image with this prompt: Which part of a rented home does this photo show? Answer on the first line with exactly one label for the main subject, from this list: kitchen-oven, kitchen-counter, kitchen-sink, fridge, bathroom-tub, bathroom-sink, toilet, living-room-wall, living-room-carpet, bedroom-wall, bedroom-carpet, window, front-door, not-a-spot, unclear. Use unclear when the photo is too dark or too blurry to tell. On the second line list any other labels from the same list that are also clearly visible, separated by commas, or write none. On the third line write one sentence about visible dirt, stains, marks or damage, or write none visible. Return the path, the capture time from the search step, the main label, the other visible labels and the sentence for every photo. Do not guess a label for a photo you cannot read.'`
 
 **Step 3. Build the pairs (no delegation).**
 
-- Group photos by label. For each spot, the move-in photo is the earliest photo of that spot in the move-in window, and the move-out photo is the latest photo of that spot in the move-out window.
+- Group photos by main label. For each spot, the move-in photo is the earliest photo with that main label in the move-in window, and the move-out photo is the latest photo with that main label in the move-out window.
+- Wider shots: if one side of a spot has no photo with that main label, use a photo from that window that lists the spot among its other visible labels, and mark it "wider shot" so the person knows the spot is in frame but not the subject.
 - Dates are copied from the capture times of Step 1, never from the vision answer.
 - Photos labelled `unclear` go to an Unclear list with their path and date. Photos labelled `not-a-spot` are counted and left out.
-- A spot with a photo on one side only is a gap: write "No dated move-in photo of this spot" or "No dated move-out photo of this spot". Never pair photos of two different spots.
+- A spot with no photo on one side, even in a wider shot, is a gap: write "No dated move-in photo of this spot" or "No dated move-out photo of this spot". Never pair photos of two different spots.
 
 **Gap mode ends here.** Show two lists: the spots that have a dated move-in photo (with file name and date), and every label from [the spot list](references/spots.md) that has none. Ask the person to photograph the missing spots that exist in their home before handing back the keys, and to look for older photos of them. Save nothing unless the person asks; if they ask, save the lists through Step 7c after approval.
 
