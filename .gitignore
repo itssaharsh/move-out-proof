@@ -36,3 +36,10 @@ storage_state*.json
 /post-draft.md
 /devto-post.md
 /first-user/
+# build orchestration and agent memory stay local (repo kept clean for judges)
+.prod-build/
+AGENTS.md
+CLAUDE.md
+docs/memory/
+# emulator outputs
+emulator/out/
