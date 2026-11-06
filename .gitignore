@@ -43,3 +43,6 @@ CLAUDE.md
 docs/memory/
 # emulator outputs
 emulator/out/
+
+# official UGREEN Skill Creation Tool (download with tools/fetch-kit.sh)
+.kit/
