@@ -16,7 +16,7 @@ The rule of this Skill: the vision model only names the spot and describes what 
 
 Scope: photos and documents the person can already access on this NAS. Nothing is sent, shared, deleted or moved. Every write (album, folder, copies, report) happens only after the person approves the exact list.
 
-Read [the spot list](references/spots.md) before labelling photos, [the report format](references/report-format.md) before writing the report, and [the guide](references/guide.md) when the person asks how the Skill works.
+Read [the spot list](references/spots.md) before labelling photos, [the report format](references/report-format.md) before writing the report, and [the guide](references/guide.md) when the person asks how the Skill works. Third-party components, what was built for this hackathon and the AI tools used are listed in [the disclosures](references/disclosures.md).
 
 # Required input
 
