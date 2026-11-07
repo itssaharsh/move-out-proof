@@ -6,6 +6,8 @@ A Skill for the UGREEN AI NAS assistant, built for the UGREEN Hackathon 2026 on 
 
 > The model looks. The camera dates decide. You approve.
 
+**Walkthrough video (2:21):** [youtu.be/NbebQNJHPKs](https://youtu.be/NbebQNJHPKs)
+
 **Watch it run:** [move-out-proof.vercel.app](https://move-out-proof.vercel.app), a replay of recorded emulator runs (no sign-in, no model calls).
 
 ![The replay page: the landlord's letter, Play, and a move-in/move-out pair with a gap](web/public/og.png)
